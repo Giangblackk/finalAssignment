@@ -1,0 +1,84 @@
+\documentclass[13pt, oneside, a4paper, openany]{article}
+\usepackage[utf8]{vietnam}
+\usepackage{amsmath, amsbsy, amsxtra, latexsym, amssymb, inputenc}
+\usepackage[top=3.5cm, bottom=3cm, left=3.5cm, right=2cm]{geometry}
+\usepackage{times}
+\usepackage{graphicx}
+\usepackage{systeme}
+\usepackage{multirow} 
+\linespread{1.3}
+\let\circledS\undefined
+\mathchardef\period=\mathcode`,
+\newtheorem{example}{Ví dụ}[section]
+\newtheorem{definition}{Định nghĩa}[section]
+\mathchardef\period=\mathcode`,
+\begin{document}
+\begin{Large}
+
+\thispagestyle{empty}
+
+\centerline{\bf TRƯỜNG ĐẠI HỌC BÁCH KHOA HÀ NỘI}
+\centerline{\bf VIỆN TOÁN ỨNG DỤNG \& TIN HỌC}
+\centerline{\bf--------------------o0o--------------------}
+\vspace*{1cm}
+\begin{figure}[!ht]
+\centering
+\includegraphics[height=4cm,width=3cm]{anhbia.jpg} 
+\end{figure}
+\vspace*{1cm}
+\centerline{\LARGE\bf ĐỒ ÁN TỐT NGHIỆP}
+\centerline{\LARGE\bf MỘT SỐ PHƯƠNG PHÁP KHAI PHÁ DỮ LIỆU ĐỒ THỊ}
+\centerline{\Large\bf Ứng dụng trong phân tích mạng giao thông và các đồ thị cỡ lớn}
+\vspace*{2cm}
+
+\hspace{2.05cm} \textbf{Thầy/Cô hướng dẫn:}
+\textbf{\parbox[t]{10cm}{\hspace{0.85cm}TS. LÊ CHÍ NGỌC}}
+
+\hspace{2cm} \textbf{Sinh viên thực hiện:}\textbf{\parbox[t]{10cm}{\hspace{1.15cm}NGÔ TRƯỜNG GIANG}}
+\vfill
+\centerline{\bf Hà Nội - 06/2017}
+
+%Tạo bảng mục lục
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+
+\newpage
+\section{Lời mở đầu}
+Khai phá dữ liệu đồ thị (graph mining) là một lĩnh vực đang phát triển với mục đích khám phá ra những tri thức và hiểu biết về những dữ liệu được biểu diễn dưới dạng đồ thị.
+Dữ liệu đồ thị có mặt khắp trong những lĩnh vực khác của đời sống hiện đại, từ mạng xã hội, mạng internet đến mạng giao thông, mạng lưới điện,...
+Trong khoa học dữ liêu thì dữ liệu có thể ở rất nhiều hình dạng khác nhau, như dữ liệu vector, dữ liệu thời gian, dữ liệu không gian, dữ liệu ảnh,...
+Đồ thị thường được sử dụng để mô hình hóa dữ liệu khi liên kết, quan hệ giữa những đối tượng là trọng tâm của dữ liệu đó.
+Ví dụ, trong khoa học xã hội, mỗi một node trong đồ thị tướng ứng với một người, và liên kết giữa những người đó có thể là quan hệ bạn bè nhưng trên Facebook, hay quan hệ đồng nghiệp như trên LinkedIn.
+Trích xuất được những thông tin, tri thức mới từ những đồ thị này có thể thúc đẩy quá trình tìm kiếm công việc mới đối với người lao động và quá trình tuyển dụng nhân sự phù hợp của các công ty, như trên mạng xã hội công việc LinkedIn đã phát triển từ lâu.
+
+Trong báo cáo này, tôi sẽ trình bày những kĩ thuật khai phá dữ liệu trên đồ thị, như phân cụm đồ thị, phân tích các tính chất của đồ thị, phân lớp dồ thị; và áp dụng những kĩ thuật này vào một só ví dụ là những đồ thị cỡ lớn.
+\section{Tập độc lập cực đại và các thuật toán tham lam}
+Trong đồ thị đơn $G = (V,E)$, một tập đỉnh được gọi là độc lập nếu không có hai đỉnh nào trong tập này kề nhau. Lực lượng của tập độc lập có kích thước lớn nhất được gọi là số độc lập của đồ thị, kí hiệu bởi $\alpha(G)$.\\
+Bài toán tìm tập độc lập có lực lượng hớn nhất và tính toán số độc lập của đồ thị có những ý nghĩa quan trọng trong nhiều lĩnh vực của đới sống, như lý thyết thông tin, sinh học, quản lý giao thông, viễn thông, v.v.\\
+Đầu tiên ta sẽ nhắc lại một số khái niệm cơ bản về lý thuyết đồ thị và tập độc lập, những định lý liên quan đến tập độc lập cực đại, và một số ứng dụng của bài toán tìm tập độc lập cực đại.\\
+
+
+\section{Áp dụng các thuật toán tìm tập độc lập cực đại trên dữ liệu mạng cỡ lớn và ứng dụng trong dịch tễ học}
+\section{Ứng dụng lý thuyết đồ thị trong phân tích mạng giao thông}
+\subsection{Mô hình hóa dữ liệu GIS đường bộ Việt Nam bằng đồ thị}
+\subsection{Phân tích những đặc trưng cơ bản của đồ thị}
+\subsection{Phân tích đồ thị và ứng dụng trong phân tích mạng đường bộ Việt Nam}
+\section{Kết luận}
+Trong báo cáo này, chúng em đã nêu được sơ lược về xích Markov liên tục và hàng chờ vòng đóng. Phân phối theo pha cũng được đề cập trong báo cáo này như một cơ sở để có thế mô hình hóa hàng chờ vòng đóng. Bằng cách mô hình các trạm của hàng đợi vòng đóng bằng phân phối theo pha, chúng ta có thể mô hình toàn bộ hàng chờ này bằng một xích Markov thời gian liên tục, từ đó tính được thời gian phục vụ và các độ đo hiệu năng để đánh giá hàng đợi.\\
+Do năng lực và thời gian có hạn, báo cáo còn nhiều sai sót mong cô và các bạn góp ý thêm.\\
+Chúng em xin chân thành cảm ơn!
+\newpage
+\begin{thebibliography}{9}
+	\bibitem{paper} 
+	Svenja Lagershausen. 
+	\textit{Markov-chain model and algorithmic procedure for the performance analysis of closed cyclic queues}. 
+	Performance Evaluation, 2015, Elsevier B.V.
+	
+	\bibitem{einstein} 
+	Philipp Reinecke, Levente Bodrog, Alexandra Danilkina.
+	\textit{Phase-Type Distributions}. 
+	Resilience Assessment and Evaluation of Computing Systems, pp 85-113, 2012.
+\end{thebibliography}
+\end{Large}
+\end{document}
