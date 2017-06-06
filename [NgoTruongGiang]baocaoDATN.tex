@@ -317,7 +317,7 @@ Trong thuật toán VO \index{VO} [4], đầu tiên ta xắp xếp các đỉnh 
 
 \subsubsection{Phương pháp kết hợp}
 Trong phần này, tôi sẽ mô tả một phiên bản được chỉnh sửa của thuật toán heuristic tham lam cổ điển. Thuật toán là sự kết hợp của thuật toán MIN và 
-$\alpha$-redundance, được đề xuất bởi Ngoc C. Le et al.[2].
+$\alpha$-redundance, được đề xuất bởi Ngoc C. Le et al. \cite{MIS}.
 Ta có hệ quả sau rút ra từ bổ đề 4.1 trong trường hợp $m=2$.
 \begin{corollary}
 	Cho đồ thị $G = (V,E)$, một đỉnh $u \in V(G)$ là $\alpha$-redundant nếu tồn tại hai đỉnh $v_1, v_2 \in N(u)$ sao cho $v_1 \nsim v_2$ và không tồn tại hai đỉnh $u_1, u_2$ sao cho $\{u,u_1,u_2\}$ là độc lập và $\{u,u_1,u_2,v_1,v_2\}$ cảm sinh $K_{2,3}$ hoặc banner hoặc $P_5$.
@@ -407,8 +407,71 @@ Từ kết quả chạy thuật toán trong bảng 1, ta có thể thấy kích 
 
 \newpage
 \section{Ứng dụng lý thuyết đồ thị trong phân tích mạng giao thông Việt Nam}
+Theo Wikipedia, \textbf{giao thông vận tải} \index{giao thông vận tải} là quá trình dịch chuyển của con người, động vật và hàng hóa từ nơi này đến nơi khác. Những loại hình giao thông vận tải gồm có: đường không, đường sắt, đường bộ, đường thủy, đường ống, dây cáp và ngoài không gian (vũ trụ). Những yếu tố cơ bản trong hệ thống thông vận tải bao gồm: \textbf{cơ sở hạ tầng}, \textbf{phương tiện} và \textbf{vận hành}. Giao thông vận tải rất quan trọng vì nó cho phép sự trao đổi qua lại giữa con người, vốn là nguồn gốc sự phát triển của nền văn minh.
 
+Cơ sở hạ tầng giao thông vận tải bao gồm sự xây dựng cố định của các loại đường đi như đường bộ, đường sắt, đường thủy, đường ống,... và các địa điểm đầu cuối như sân bay, nhà ga, kho hàng, cảng biển,... Những địa điểm đầu cuối có thể được sử dụng như nơi trung gian vận chuyển con người và hàng hóa hoặc là nơi lưu trữ.
+
+Phương tiện di chuyển ở trong giao thông vận tải rất đa dạng, từ đơn giản như đi bộ, phổ biến như xe ôtô, cho đến hiện đại như máy bay hay tàu vũ trụ.
+
+Vận hành hệ thống giao thông vận tải liên quan đến cách các phương tiện tham gia giao thông được điều khiển, liên quan đến những vấn đề khác như luật pháp, tài chính và các quy định. Trong ngành công nghiệp giao thông vận tải, cơ sở hạ tầng giao thông có thể được xây dựng để phục vụ mục đích công cộng hoặc do một tổ chức tư nhân đứng ra xây dựng và vận hành.
+
+Giao thông vận tải có vai trò rất quan trọng đối với mọi mặt của xã hội hiện đại, khả năng mô hình hóa được mạng lưới giao thông, đưa ra được những phân tích và đánh giá về trình trạng của hệ thống giao thông có ý nghĩa rất quan trọng, hỗ trợ quá trình đưa ra quyết định chính xác, cho những nhà quản lý hệ thống giao thông, những công ty về dịch vụ giao thông vận tải, những nhà quy hoạch xây dựng và đất đai, và tất cả các đối tượng đang sử dụng hệ thống giao thông.
+
+Trong phần này của báo cáo, tôi sẽ trình bày quá trình xây dựng mô hình đồ thị cho mạng giao thông quốc lộ của Việt Nam, với nguồn là dữ liệu GIS về các đường quốc lộ. Từ mô hình đồ thị, tôi đo lường một số chỉ số về độ phân cụm của mạng, độ trung tâm của những nút trong mạng, tính hiệu quả của mạng, từ đó đưa ra phân tích về tình trạng giao thông tại Việt Nam.
+
+%\subsubsection{Cung và cầu của hệ thống giao thông vận tải}
+%Mỗi một \textbf{nhu cầu vận chuyển} trong hệ thống giao thông vận tải đều là để phục vụ một nhu cầu nào đó khác ngoài đơn thuần là sự dịch chuyển. Hệ thống giao thông vận tải thực chất là hệ thống dịch vụ, và dịch vụ vận chuyển qua này sẽ phụ thuộc vào khả năng phục vụ của cơ sở hạ tầng giao thông, hay chính là khả năng \textbf{cung cấp dịch vụ} của hệ thống giao thông.
+%
+%Mọi nền kinh tế đều bao gồm các hoạt động diễn ra ở những địa điểm khác nhau, và sự dịch chuyển trao đổi phải diễn ra trong hệ thống giao thông vận tải. Nếu không có sự dịch chuyển thì hệ thống giao thông vận tải sẽ không có ý nghĩa và nếu không có giao thông vận tải thì sự dịch chuyển không thể xảy ra. Mối quan hệ phụ thuộc qua lại này có thể được nhìn nhận như một quan hệ cung-cầu trong kinh tế học, nhưng áp dụng đối với giao thông vận tải.
+%
+%Cung nhau khả năng cung cấp dịch vụ vận tải, là khả năng phục vụ của hệ thống cơ sở hạ tầng giao thông. Cung của hệ thống giao thông vận tải có thể được biểu diễn như 
+\subsection{GIS}
+Khái niệm GIS thường được hiểu là viết tắt của Geographical Information System, tức hệ thống thông tin địa lý, là một hệ thống máy tính, lưu trữ, xử lý và hiển thị dữ liệu địa lý.
+GIS cũng có thể được hiểu là Geographical Information Sciences, tức khoa học về thông tin địa lý, được sử dụng bởi các hệ thống thông tin địa lý. Trong cáo cáo này, GIS được mặc định là viết tắt của khoa học thông tin địa lý.
+\subsubsection{Các khái niệm cơ bản trong GIS}
+Vị trí (location) trong GIS thể hiện những điểm trên bề mặt của trái đát. Cách thông thường trong đo lường vị trí trên trái đất là sử dụng hệ tọa độ kinh độ vĩ độ.
+
+Khoảng cách (distance) trong GIS có nhiều loại khác nhau, có khoảng cách góc, khoảng cách tuyến tính hay khoảng cách theo đường chim bay và khoảng cách đường đi. Mỗi một loại khoảng cách lại có đơn vị đo khác nhau và được sử dụng vào một mục đích khác nhau.
+
+Phép chiếu (projection) là một biến đổi toán học, giúp tạo ra bản đồ hai chiều của trái đất từ không gian ba chiều. Những phép chiếu nổi tiếng: phép chiếu Mercator, phép chiếu UTM.
+Có hàng trăm phép chiếu khác nhau được phát triển, và không có phép chiếu nào là hoàn hảo, luôn có sự sai lệch trong biểu diễn bản đồ. Một số bản đồ giúp bảo toàn diện tích nhưng lại làm biến dạng hình dạng của đối tượng địa lý, ngược lại có những bản đồ bảo toàn hình dạng của đối tượng địa lý nhưng lại sai về diện tích.
+
+Hệ tọa độ địa lý (coordinate system) cho phép biểu diễn vị trí của các điểm trên trái đất trong một hệ tọa độ, thường liên quan đến phép chiếu và các quy định về kích thước và hình dạng của trái đất. Một hệ tọa độ địa lý thường dduocjw sử dụng là UTM (Universal Transverse Mercator), chia thế giới thành 60 vùng khác nhau, mỗi vùng có một phép chiếu khác nhau để làm giảm sai lệch của phép chiếu.
+
+Trong GIS, để biểu diễn các đối tượng địa lý trên bản đồ, người ta sử dụng khái niệm hình dạng. Có ba loại hình dạng cơ bản được sử dụng, đó là điểm (point), đường (polyline) và đa giác (polygon).
+Một điểm được biểu diễn bằng vị trí địa lý của nó, đi kèm với thông tin về hệ tọa độ địa lý được sử dụng.
+Đường và đa giác thực chất là danh sách của những điểm theo một thứ tự nhất định.
+Đa giác là đường mà điểm đầu và điểm cuối trùng nhau.
+Ví dụ khi biểu diễn vị trí của mộ tòa nhà, ta có thể sử dụng điểm, khi biểu diễn hình dạng của một hòn đảo, ta có thể sử dụng đa giác, khi biểu diễn biên giới, ta có thể sử dụng đường.
+
+Chỉ với ba loại hình dạng cơ bản trên, ta có thể biểu diễn các đối tượng địa lý trên trái đất. Dữ liệu đường bô Việt Nam được sử đụng trong báo cáo này cũng là dữ liệu GIS.
 \subsection{Mô hình hóa dữ liệu GIS đường bộ Việt Nam bằng đồ thị}
+\subsubsection{Dữ liệu GIS về giao thông đường bộ Việt Nam}
+Dữ liệu GIS về đường bộ Việt Nam, cụ thể là các trục đường quốc lộ, được sử dụng để tính toán trong báo cáo này được lấy từ nguồn [?] (hình 3 và 4).
+\begin{figure}
+	\centering
+	\begin{minipage}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{figures/vietnamroad.png} % first figure itself
+		\caption[dữ liệu đường bộ Việt Nam]{dữ liệu đường bộ Việt Nam, hiển thị bằng phần mềm QGIS.}
+	\end{minipage}\hfill
+	\begin{minipage}{0.6\textwidth}
+		\centering
+		\includegraphics[width=0.5\textwidth]{figures/vietnamroad03.png} % second figure itself
+		\caption[dữ liệu đường bộ Việt Nam được đặt trên bản đồ địa chính]{dữ liệu đường bộ Việt Nam được đặt trên bản đồ địa chính.}
+	\end{minipage}
+\end{figure}
+
+\subsubsection{Phương pháp mô hình đồ thị cho dữ liệu GIS đường bộ Việt Nam}
+Ban đầu khởi tạo đồ thị vô hướng rỗng $G$. Ánh xạ mỗi điểm đầu và điểm cuối của một đoạn đường với hai đỉnh tương ứng được thêm mới vào đồ thị $G$. Thêm một cạnh giữa hai đỉnh này vào đồ thị $G$, ứng với đoạn đường đó trên dữ liệu GIS. Các thuộc tính của đoạn đường trong dữ liệu GIS như tên, độ dài, mã code, được lưu như các thuộc tính của cạnh tương ứng trong đồ thị $G$.
+Mỗi điểm trên đồ thị $G$ ứng với một đầu mút của một hay nhiều đoạn đường trên dữ liệu GIS.
+Kết quả xử lý dữ liệu GIS để thu được đồ thị được biểu diễn trong hình 5. Các đỉnh của đồ thị được đặt vào các vị trí tương đối với nhau như trên địa lý.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{figures/vietnamroad.pdf} 
+	\caption[Đồ thị mạng đường bộ Việt Nam]{Đồ thị mạng đường bộ Việt Nam}
+\end{figure}
 
 \subsection{Những đặc trưng cơ bản trong phân tích đồ thị}
 Một trong những bài toán trong phân tích đồ thị là quyết định độ quan trong của một đỉnh hay một cạnh. Chỉ số \textbf{tính trung tâm} \index{tính trung tâm} (centrality) của một đỉnh trong đồ thị thường chỉ ra mức độ ảnh hưởng của một đỉnh đó đến toàn bộ đồ thị. Có rất nhiều loại chỉ số trung tâm khác nhau và mỗi chỉ số có cách tính cũng như ý nghĩa khác nhau trong đánh giá độ quan trọng của một đỉnh và cạnh của đồ thị. Sau đây ta giới thiệu những chỉ số trung tâm cơ bản và ý nghĩa của chúng trong mạng giao thông.
@@ -438,7 +501,51 @@ Ta sẽ nhắc lại một số khái niệm cơ bản về lý thuyết đồ t
 	rad(G) \leq diam(G) \leq 2 * rad(G)
 \end{equation}
 
-\subsubsection{Degree centrality và closeness centrality}
+\subsubsection{Hệ số phân cụm}
+\begin{definition}
+	\cite{complexnetwork}Cho đồ thị $G = (V,E)$, hệ số phân cụm \index{hệ số phân cụm} của một đỉnh $v \in V(G)$ kí hiệu là $cc(v)$ được định nghĩa là tỉ lệ giữa số cạnh tồn tại giữa các lân cận của đỉnh $v$ và số dạnh tối đa có thể có giữa những lân cận. Ta có công thức:
+	\begin{equation}
+		cc(v) = \frac{2m_v}{n_v(n_v-1)}
+	\end{equation}
+	trong đó $n_v$ là số đỉnh lân cận của đỉnh $v$ và $m_v$ là số cạnh giữa các lân cận của đỉnh $v$.
+\end{definition}
+
+Hệ số phân cụm $cc(v)$ trên được gọi là hệ số phân cụm địa phương. Hệ số phân cụm trung bình $CC(G)$ của đồ thị $G$ là trung bình giá trị của hệ số phân cụm của tất cả các đỉnh trong đồ thị:
+\begin{equation}
+	CC(G) = \frac{1}{n}\sum_{v \in V}cc(v)
+\end{equation}
+Một giá trị hệ số phân cụm trung bình thấp cho thấy tính liên kết kém giữa các cặp đỉnh của đồ thị. Nói cách khác, $CC(G)$ cho thấy độ dầy đặc của đồ thị.
+
+Một phương pháp khác để tính hệ số phân cụm là sử dụng đồ thị tham giác và đồ thị bộ ba (triad). Đồ thị tam giác là đồ thị $K_3$, đồ thị bộ ba là đồ thị $P_3$. Ta có thể nhận thấy rằng số đồ thị tam giác mà một đỉnh kề với, chính là số cạnh giữa các đỉnh lân cận của đỉnh đó, số đồ thị bộ ba mà một đỉnh kề với, chính là số cạnh tối đa có thể có giữa các đỉnh lân cận của đỉnh đó.
+Dựa trên điều này, ta có công thức khác tính hệ số phân cụm của một đỉnh:
+\begin{equation}
+	cc(v) = \frac{n_t(v)}{n_x(v)}
+\end{equation}
+với $n_t(v)$ và $n_x(v)$ lần lượt là số đồ thị tam giác và số đồ thị bộ ba ứng với đỉnh $v$ của đồ thị.
+
+\begin{definition}
+	\cite{complexnetwork} Cho một đồ thị đơn liên thông $G = (V,E)$ và $n_t(G)$ là số đồ thị tam giác phân biệt trong $G$, $n_t(G)$ là số đồ thị bộ ba phân biệt trong $G$. Hệ số bắc cầu \index{Hệ số bắc cầu} (network transitivity) của đồ thị $G$, $\tau(G)$ là tỉ lệ giữa $n_t(G)$ và $n_x(G)$, có công thức.
+	\begin{equation}
+		\tau(G) = \frac{3n_t(G)}{n_x(G)} = \frac{\sum n_t(v)}{\sum n_x(v)}
+	\end{equation}
+	Sở dĩ có số 3 trong công thức vì mỗi đỉnh của đồ thị tam giác được tính một lần trong $n_x(G)$.
+\end{definition}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{figures/clustercoefficient.png} 
+	\caption[Hệ số phân cụm]{Hệ số phân cụm của đồ thi (a) là 0.4 trong khi hệ số phân cụm của đồ thị (b) là 0.71, thể hiện rằng đồ thị (b) dày đặc hơn và có kết nối với nhau nhiều hơn.}
+	\label{fig:clustercoeff}
+\end{figure}
+
+%\subsubsection{Những mô hình mạng}
+%Những mô hình mạng đã được phân lớp rõ ràng: mạng ngẫu nhiên (random network), mạng thế giới nhỏ (small world network) và mạng không tỉ lệ (scale-free network).
+
+%\begin{paragraph}
+%	Mạng ngẫu nhiên, lần đầu tiên được đê xuất bởi Erdos và Renyi \cite{randnet} 
+%\end{paragraph}
+
+\subsubsection{Chỉ số trung tâm bậc và chỉ số trung tâm gần gũi}
 Chỉ số trung tâm bậc (degree centrality) dựa trên ý tưởng rằng một đỉnh quan trọng thì có bậc hay số đỉnh kề với nó cao. Cho đồ thị $G=(V,E)$, $|V(G)| = N$, công thức chuẩn hóa của chỉ số trung tâm bậc của đỉnh $i$ trong đồ thị $G$, $C_D(i)$ được định nghĩa bởi Freeman \cite{centrali01},\cite{centrali02}:
 \begin{equation}
 	C_D(i) = \frac{k_i}{N-1} = \frac{\sum_{j \in N}a_{ij}}{N-1}
@@ -472,8 +579,21 @@ C_S(i) = \frac{1}{N-1} \mathlarger{\sum}_{j \in V(G); j \neq i} \frac{d^{\text{c
 	C_E(i) = \frac{\mathlarger{\sum}_{j \in V(G); j \neq i}\frac{1}{d(i,j)}}{\mathlarger{\sum}_{j \in V(G); j \neq i}\frac{1}{d^{\text{crowfly}}(i,j)}}
 \end{equation}
 trong đó $d^{\text{crowfly}}(i,j)$ là khoảng cách chim bay giữa hai đỉnh $i$,$j$ của mạng.
-\subsection{Phân tích đồ thị và ứng dụng trong phân tích mạng đường bộ Việt Nam}
+
+\subsection{Phân tích mạng đường bộ Việt Nam}
 \newpage
+\subsubsection{Phân tích các tham số cơ bản}
+Hình \ref{fig:degreedist} biểu diễn biểu phân phối bậc của các đỉnh trong đồ thị mạng đường bộ Việt Nam.Trong dữ liệu GIS đường bộ Việt Nam có rất nhiều đoạn đường ngắn, nối tiếp nhau, của cùng một tên đường, nên ta có thể thấy là số đỉnh bậc 2 chiếm đa số trong phân phối bậc của đỉnh. Còn lại số đỉnh bậc 1,3 và 4 của đồ thị khá hợp lý, tương tự với kết quả thu được trong phân tích mạng giao thông của Thụy Sĩ \cite{swissroad}, số đỉnh bậc 3 chiếm đa phần nếu không tính các đỉnh bậc 2 sinh ra do dữ liệu chưa chuẩn.
+
+Các 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.8]{figures/degreedist.pdf} 
+	\caption[Phân phối bậc của đỉnh trong mạng đường bộ Việt Nam]{Phân phối bậc của đỉnh trong mạng đường bộ Việt Nam.}
+	\label{fig:degreedist}
+\end{figure}
+
 \section{Kết luận}
 
 %%%%%
@@ -502,7 +622,7 @@ trong đó $d^{\text{crowfly}}(i,j)$ là khoảng cách chim bay giữa hai đ�
 	%
 	\bibitem{MIS}
 	Ngoc C. Lê.
-	"Algorithms for the MaximumIndependent Set Problem",
+	"Algorithms for the Maximum Independent Set Problem",
 	%
 	\bibitem{MAXAlgorithm}
 	Griggs, J. R.
@@ -538,18 +658,31 @@ trong đó $d^{\text{crowfly}}(i,j)$ là khoảng cách chim bay giữa hai đ�
 	Freeman, L. C.
 	"A set of measures of centrality based on betweenness",
 	Sociometry, (1977) Vol. 40, No. 1, pp. 35-41.
+	%
 	\bibitem{centrali03}
 	Sabidussi, G. 
 	"The centrality index of a graph",
 	 Psychometrika, Vol. 31 , pp. 581-603.
+	 %
 	 \bibitem{efficiency01}
 	 Latora, V. and M. Marchiori,
 	 "Efficient beahviour of small-world networks",
 	 "Physical Review Letters" (2001), Vol. 87.
+	 %
 	 \bibitem{efficiency02}
 	 Latora, V. and M. Marchiori, 
 	 "Is the Boston subway a small-world network?",
 	 Physica A (2002), Vol. 314 , pp. 109–113.
+	 %
+	 \bibitem{complexnetwork}
+	 Kayhan Erciyes,
+	 \textit{Complex Networks: An Algorithmic Perspective},
+	 CRC Press, isbn: 1466571667, 9781466571662, 2014.
+	 %
+	 \bibitem{randnet}
+	 P. Erdos andA. Renyi.
+	 "On random graphs",
+	 Publicationes Mathematicae, pp. 290-297, 1959.
 \end{thebibliography}
 
 \end{document}
