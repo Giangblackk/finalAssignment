@@ -52,6 +52,9 @@
 \usepackage{csvsimple}
 \usepackage{relsize}
 
+\usepackage{caption}
+\usepackage{subcaption}
+
 % first page
 \linespread{1.25}
 \let\circledS\undefined
@@ -74,7 +77,7 @@
 \vspace*{1cm}
 
 \centerline{\large\bf ỨNG DỤNG LÝ THUYẾT ĐỒ THỊ TRONG BÀI TOÁN THỰC TẾ}
-\centerline{\large\bf Ứng dụng trong phân tích mạng giao thông và các đồ thị mạng xã hội}
+\centerline{\large\bf Ứng dụng trong phân tích mạng giao thông và dịch tễ học}
 \vspace*{1cm}
 \centerline{\Large\bf ĐỒ ÁN TỐT NGHIỆP ĐẠI HỌC}
 \centerline{\Large\bf Chuyên ngành: Toán Tin}
@@ -87,6 +90,10 @@
 \hspace{2cm} \textbf{Sinh viên thực hiện }
 \hspace{0.68cm} \textbf{:}
 \textbf{\parbox[t]{10cm}{\hspace{0.85cm}NGÔ TRƯỜNG GIANG}}
+
+\hspace*{1.95cm} \textbf{Lớp} 
+\hspace{4.05cm} \textbf{:}
+\hspace{10pt} \textbf{\parbox[t]{10cm}{\hspace{0.45cm}TOÁN TIN K57}}
 
 \hspace*{1.95cm} \textbf{SHSV } 
 \hspace{3.5cm} \textbf{:}
@@ -162,13 +169,12 @@ Cuối cùng em xin chúc các thầy cô giáo trong Trường Đại Học Bá
 Phân tích dữ liệu đồ thị (graph analysis hoặc network analysis) là một lĩnh vực đang phát triển với mục đích khám phá ra những tri thức và hiểu biết về những dữ liệu được biểu diễn dưới dạng đồ thị.
 Dữ liệu đồ thị có mặt khắp trong những lĩnh vực khác của đời sống hiện đại, từ mạng xã hội, mạng internet đến mạng giao thông, mạng lưới điện,...
 Đồ thị thường được sử dụng để mô hình hóa dữ liệu khi liên kết, quan hệ giữa những đối tượng là trọng tâm của dữ liệu đó.
-Ví dụ, trong khoa học xã hội, mỗi một node trong đồ thị tướng ứng với một người, và liên kết giữa những người đó có thể là quan hệ bạn bè nhưng trên Facebook, hay quan hệ đồng nghiệp như trên LinkedIn.
-Trích xuất được những thông tin, tri thức mới từ những đồ thị này có thể thúc đẩy quá trình tìm kiếm công việc mới đối với người lao động và quá trình tuyển dụng nhân sự phù hợp của các công ty, như trên mạng xã hội công việc LinkedIn đã phát triển từ lâu.
+Ví dụ, trong khoa học xã hội, mỗi một nút trong đồ thị tướng ứng với một người, và liên kết giữa những người đó có thể là quan hệ bạn bè nhưng trên mạng xã hội Facebook, hay quan hệ theo dõi như trên mạng xã hội Twitter.
 
-Trong báo cáo này, tôi sẽ trình bày ứng dụng lý thyết đồ thị tìm tập độc lập cực đại trên giao thông và mạng xã hội cỡ lớn, một số kĩ thuật cơ bản trong phân tích dữ liệu đồ thị và áp dụng vào bài toán phân tích mạng giao thông đường bộ Việt Nam.
+Trích xuất được những thông tin, tri thức mới từ những đồ thị này có thể thúc đẩy quá trình đưa ra những quyết định chính xác hơn và nhanh chóng hơn. 
+Ví dụ như cách mà mạng xã hội công việc LinkedIn giúp những người đi làm xây dựng cho bản thân họ một mạng lưới bạn bè trong công việc, tăng hình ảnh cá nhân trong mắt các nhà tuyển dụng cũng như khả năng tìm được công việc với phù hợp thông qua những người bạn này. Đồng thời LinkedIn cũng giúp các nhà tuyển dụng phân tích mạng lưới bạn bè của các ứng cử viên, hiểu hơn về ứng viên của mình thông qua quan hệ của họ với những cá nhân có ảnh hưởng khác, từ đó tìm được nhân viên phù hợp cho công việc. LinkedIn chính là điển hình của một công ty thành công nhờ áp dụng lý thuyết đồ thị vào sản phẩm của mình.
 
-\newpage
-\section{Giới thiệu}
+Trong báo cáo này, tôi sẽ trình bày ứng dụng của bài toán tìm tập độc lập cực đại trên các đồ thị cỡ lớn với ứng dụng trong dịch tễ học và ứng dụng phân tích mạng giao thông đường bộ Việt Nam, sử dụng một số kĩ thuật cơ bản trong phân tích dữ liệu đồ thị.
 
 \newpage
 \section{Tập độc lập cực đại và các thuật toán heuristic tham lam}
@@ -196,44 +202,49 @@ Bài toán tìm tập độc lập cực đại \index{Bài toán tìm tập đ�
 
 Trong báo cáo này, tôi sẽ tập trung vào bài toán tìm tập độc lập cực đại (MIS), các thuật toán và ứng dụng của bài toán tìm tập độc lập cực đại trong thực tế. 
 
-Một số ký hiệu được sử dụng:
+Một số ký hiệu trong lý thuyết đồ thị được sử dụng:
 \begin{itemize}
 	\item Cho đồ thị $G = (V,E)$, ta kí hiệu $V(G)$ là tập đỉnh\index{tập đỉnh} của đồ thị và $E(G)$ là tập cạnh \index{tập cạnh} của đồ thị.
 	\item $n(G) = |V(G)|$ là số đỉnh của đồ thị $G$, $m(G) = |E(G)|$ là số cạnh của đồ thị $G$. Nếu không nói gì thêm, ta viết tắt $V, E, n$ và $m$ lần lượt thay cho $V(G), E(G), n(G)$ và $m(G)$.
-	\item Một cạnh (u,v) của đồ thị $G$ được kí hiệu là $uv$. Với $u,v \in V(G)$, ta kí hiệu $u \sim v$ nếu $uv \in E(G)$ và $u \nsim v$ nếu $uv \not\in E(G)$.
+	\item Một cạnh $(u,v)$ của đồ thị $G$ được kí hiệu là $uv$. Với $u,v \in V(G)$, ta kí hiệu $u \sim v$ nếu $uv \in E(G)$ và $u \nsim v$ nếu $uv \not\in E(G)$.
 	\item Với mỗi đỉnh $u$ của đồ thị $G$, ta kí hiệu $N_G(u) = \{v \in V: uv \in E\}$ là tập đỉnh kề với đỉnh $u$, hay còn gọi là lân cận \index{lân cận} của $u$ trong đồ thị $G$.
-	\item $\textrm{deg}(u)$ là bậc của đỉnh \index{bậc của đỉnh} $u$, trong đồ thị $G$, hay chính là số cạnh kề với cạnh $u$ trong đồ thị $G$.
+	\item $\textrm{deg}(u)$ là bậc của đỉnh \index{bậc của đỉnh} $u$, trong đồ thị $G$, hay chính là số cạnh kề với đỉnh $u$ trong đồ thị $G$.
 	\item $\delta(G)$ là bậc nhỏ nhất \index{bậc nhỏ nhất} trong $G$, $\delta(G) := \min\{\textrm{deg}(u)\} , u \in V(G)$.
 	\item $\Delta(G)$ là bậc lớn nhất \index{bậc lớn nhất} trong $G$, $\Delta(G) := \max\{\textrm{deg}(u)\} , u \in V(G)$.
 	\item Ta kí hiệu đồ thị vòng  hay chu trình \index{chu trình} có $n$ đỉnh là $C_n$.
 	\item Ta kí hiệu đồ thị đường hay đường đi \index{đường đi} có $n$ đỉnh là $P_n$.
-	\item Ta kí hiệu đồ thị đầy đủ hai phía là $K_{m,n}$.
+	\item Ta kí hiệu đồ thị hai phía  đầy đủ là $K_{m,n}$.
 	%\item Đồ thị $(m,n)$-tadpole  \index{tadpole} là đồ thị đạt được bằng cách gắn một đồ thị chu trình $C_m$ với một đồ thị đường đi $P_n$ qua một cầu.
-	\item \cite{graphclasses} Banner là đồ thị có dạng như hình 1.
+	\item \cite{graphclasses} Banner là đồ thị có dạng như hình \ref{fig:banner}.
 	\begin{figure}[!h]
 		\centering
 		\includegraphics[scale=1]{figures/banner.png} 
-		\caption[Đồ thị Banner]{Đồ thị Banner \cite{graphclasses}.}
+		\caption[Đồ thị Banner]{Đồ thị Banner}
+		\label{fig:banner}
 	\end{figure}
 \end{itemize}
 
-Đồ thị $G'=(V',E')$ được gọi là đồ thị con của đồ thị $G=(V,E)$ nếu $V' \subset V$ và $E' \subset E$.
+Đồ thị $G'=(V',E')$ được gọi là đồ thị con \index{đồ thị con} của đồ thị $G=(V,E)$ nếu $V' \subseteq V$ và $E' \subseteq E$.
 
-Ta gọi đồ thị $H$ là đồ thị con \textbf{cảm sinh} \index{cảm sinh} của đồ thị $G$ hay đồ thị $G$ cảm sinh $H$ nếu ta có thể thu được đồ thị $H$ băng cách xóa đi một số đỉnh trong đồ thị $G$ (có thể không xóa đi đỉnh nào) cùng với những cạnh kề với các đỉnh đó.
+Ta gọi đồ thị $H$ là đồ thị con \textbf{cảm sinh} \index{cảm sinh} của đồ thị $G$ hay đồ thị $G$ cảm sinh $H$ nếu ta có thể thu được đồ thị $H$ bằng cách xóa đi một số đỉnh trong đồ thị $G$ (có thể không xóa đi đỉnh nào) cùng với những cạnh kề với các đỉnh đó.
 
-Một đồ thị con của $G$ cảm sinh bởi một tập đỉnh $U \subset V(G)$ là đồ thị thu được bằng việc xóa đi tất cả các đỉnh của tập đỉnh $V(G) \setminus U$ trong đồ thị $G$, kí hiệu đồ thị con này là $G[U]$.
+Một đồ thị con của $G$ cảm sinh bởi một tập đỉnh $U \subset V(G)$ là đồ thị thu được bằng việc xóa đi tất cả các đỉnh của tập đỉnh $V(G) \setminus U$ trong đồ thị $G$, được kí hiệu là $G[U]$.
 
-Cho một tập đỉnh $W \subset V(G)$, ta cũng nói rằng $W$ cảm sinh đồ thị $H$ nếu $G[H]$ cảm sinh $H$.
-\subsection{Alpha-redundant}
-%Một đỉnh của đồ thị $G$ được gọi là $\alpha$-redundant nếu việc xóa đỉnh đó khỏi đồ thi $G$ không làm thay đổi số độc lập \index{số độc lập} của đồ thị $G$.
+Cho một tập đỉnh $W \subset V(G)$, ta cũng nói rằng $W$ cảm sinh đồ thị $H$ nếu $G[W]$ cảm sinh $H$.
+
+Ta kí hiệu $G - U := G[V(G) \setminus U]$ với $U \subseteq V(G)$.
+Ta cũng kí hiệu $G - u := G - \{u\}$ với $u \in V(G)$.
+
+\subsection{Alpha-dư thừa}
+%Một đỉnh của đồ thị $G$ được gọi là $\alpha$-dư thừa nếu việc xóa đỉnh đó khỏi đồ thi $G$ không làm thay đổi số độc lập \index{số độc lập} của đồ thị $G$.
 \begin{definition}
-	\cite{alpharedundant} Cho đồ thị $G = (V,E)$, một đỉnh $v \in V(G)$ được gọi là $\alpha$-redundant \index{alpha-redundant} nếu $\alpha(G-v) = \alpha(G)$.
+	\cite{alpharedundan} Cho đồ thị $G = (V,E)$, một đỉnh $v \in V(G)$ được gọi là $\alpha$-dư thừa ($\alpha$-redundant) \index{alpha-dư thừa} nếu $\alpha(G-v) = \alpha(G)$.
 \end{definition}
 
-Bài toán kiểm tra một đỉnh có phải là $\alpha$-redundant rõ ràng là tương đương với bài toán tìm tập độc lập cực đại, và đô đó thuộc lớp bài toán NP-complete. Tuy nhiên trong một số trường hợn, những đỉnh $\alpha$-redundant có thể nhận ra một cách hiệu quả.
+Bài toán kiểm tra một đỉnh có phải là $\alpha$-dư thừa rõ ràng là tương đương với bài toán tìm tập độc lập cực đại, và do đó thuộc lớp bài toán NP-complete. Tuy nhiên trong một số trường hợp, những đỉnh $\alpha$-dư thừa có thể được nhận ra một cách hiệu quả.
 
 \begin{lemma}
-	\cite{alpharedudant2} Cho một đồ thị $G$ cảm sinh $K_{1,m}, \{u,v_1,v_2,...,v_m\}$, trong đó $u$ là đỉnh trung tâm (đỉnh có bậc $m$), sẽ tồn tại một số đỉnh $u_1,u_2,...,u_m$ sao cho $\{u,u_1,u_2,...,u_m\}$ là một tập độc lập và tồn tại một cặp ghép hoàn hảo giữa $\{u_i\}$ và $\{v_i\}$ hoặc $u$ là một đỉnh $\alpha$-redundant.
+	\cite{alpharedudant2} Cho một đồ thị $G$ cảm sinh $K_{1,m}, \{u,v_1,v_2,...,v_m\}$, trong đó $u$ là đỉnh trung tâm (đỉnh có bậc $m$), sẽ tồn tại một số đỉnh $u_1,u_2,...,u_m$ sao cho $\{u,u_1,u_2,...,u_m\}$ là một tập độc lập và tồn tại một cặp ghép hoàn hảo giữa $\{u_i\}$ và $\{v_i\}$ hoặc $u$ là một đỉnh $\alpha$-dư thừa.
 \end{lemma}
 
 \subsection{Các thuật toán heuristic tham lam giải bài toán tìm tập độc lập cực đại}
@@ -244,7 +255,7 @@ Phương pháp heuristic có thể được sử dụng để tìm tập độc 
 Ta xem xét 3 thuật toán heuristic phổ biến cho bài toán tìm tập độc lập cực đại: MIN, MAX và VO (Vertex Ordering).
 
 \paragraph{Thuật toán MIN}
-Thuật toán MIN \index{MIN} được mô tả như sau: bắt đầu với một tập độc lập rỗng $I$, thuật toán liên tiếp chọn những đỉnh có bậc nhỏ nhất trong $G$, thêm đỉnh này vào tập $I$ và xóa đỉnh đó đi khỏi đồ thị $G$. Thuật toán dừng khi đồ thị $G$ không còn có đỉnh nào.
+\cite{MINAlgorithm} Thuật toán MIN \index{MIN} được mô tả như sau: bắt đầu với một tập độc lập rỗng $I$, thuật toán liên tiếp chọn những đỉnh có bậc nhỏ nhất trong $G$, thêm đỉnh này vào tập $I$ và xóa đỉnh đó đi khỏi đồ thị $G$. Thuật toán dừng khi đồ thị $G$ không còn có đỉnh nào.
 
 %%%%%%%%%%%%%%%
 \begin{algorithm}
@@ -263,7 +274,7 @@ Thuật toán MIN \index{MIN} được mô tả như sau: bắt đầu với m�
 \end{algorithm}
 %%%%%%%%%%%%%%%
 \paragraph{Thuật toán MAX}
-Trong thuật toán MAX \index{MAX} [3], ta liên tiếp lựa chọn một đỉnh có bậc lớn nhất trong đồ thị $G$, xóa đỉnh đó khỏi $G$ cho đến khi $G$ không còn có cạnh nào nữa. Những đỉnh còn lại hình thành một tập độc lập cực đại.
+Trong thuật toán MAX \index{MAX} \cite{MAXAlgorithm}, ta liên tiếp lựa chọn một đỉnh có bậc lớn nhất trong đồ thị $G$, xóa đỉnh đó khỏi $G$ cho đến khi $G$ không còn có cạnh nào nữa. Những đỉnh còn lại trên đồ thị hình thành một tập độc lập cực đại.
 
 %%%%%%%%%%%%%%%
 \begin{algorithm}
@@ -282,7 +293,7 @@ Trong thuật toán MAX \index{MAX} [3], ta liên tiếp lựa chọn một đ�
 \end{algorithm}
 %%%%%%%%%%%%%%%
 \paragraph{Thuật toán VO (Vertex Order)}
-Trong thuật toán VO \index{VO} [4], đầu tiên ta xắp xếp các đỉnh của đồ thị $G$ theo thứ tự tăng về bậc của đỉnh. Sau đó lần lượt xử lý các đỉnh trong danh sách đã được xắp xếp và thêm đỉnh vào tập độc lập nếu nó không kề với bất cứ đỉnh nào trong tập độc lập hiện tại.
+Trong thuật toán VO \index{VO} \cite{VOAlgorithm}, đầu tiên ta xắp xếp các đỉnh của đồ thị $G$ theo thứ tự tăng về bậc của đỉnh. Sau đó lần lượt xử lý các đỉnh trong danh sách đã được xắp xếp và thêm đỉnh vào tập độc lập nếu nó không kề với bất cứ đỉnh nào trong tập độc lập hiện tại.
 
 %%%%%%%%%%%%%%%
 \begin{algorithm}
@@ -317,21 +328,47 @@ Trong thuật toán VO \index{VO} [4], đầu tiên ta xắp xếp các đỉnh 
 
 \subsubsection{Phương pháp kết hợp}
 Trong phần này, tôi sẽ mô tả một phiên bản được chỉnh sửa của thuật toán heuristic tham lam cổ điển. Thuật toán là sự kết hợp của thuật toán MIN và 
-$\alpha$-redundance, được đề xuất bởi Ngoc C. Le et al. \cite{MIS}.
+$\alpha$-dư thừa, được đề xuất bởi Ngoc C. Le et al. \cite{MIS}.
+
 Ta có hệ quả sau rút ra từ bổ đề 4.1 trong trường hợp $m=2$.
 \begin{corollary}
-	Cho đồ thị $G = (V,E)$, một đỉnh $u \in V(G)$ là $\alpha$-redundant nếu tồn tại hai đỉnh $v_1, v_2 \in N(u)$ sao cho $v_1 \nsim v_2$ và không tồn tại hai đỉnh $u_1, u_2$ sao cho $\{u,u_1,u_2\}$ là độc lập và $\{u,u_1,u_2,v_1,v_2\}$ cảm sinh $K_{2,3}$ hoặc banner hoặc $P_5$.
+	Cho đồ thị $G = (V,E)$, một đỉnh $u \in V(G)$ là $\alpha$-dư thừa nếu tồn tại hai đỉnh $v_1, v_2 \in N(u)$ sao cho $v_1 \nsim v_2$ và không tồn tại hai đỉnh $u_1, u_2$ sao cho $\{u,u_1,u_2\}$ là độc lập và $\{u,u_1,u_2,v_1,v_2\}$ cảm sinh $K_{2,3}$ hoặc banner hoặc $P_5$.
 \end{corollary}
-
-Thuật toán NMIN \index{NMIN} là sự kết hợp của kĩ thuật $\alpha$-redundant và thuật toán MIN.
-
-Cho $G$ là một đồ thị đơn,vô hướng bất kỳ, gọi $n = |V(G)|$. Thuật toán NMIN trả về một tập độc lập cực đại. Thuật toán liên tiếp lựa chọn một đỉnh có bậc nhỏ nhất là $u$, sau đó kiểm tra và xóa đỉnh $u$ nếu $u$ là $\alpha$-redundant bằng cách áp dụng hệ quả 4.0.1.
+%
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}{.3\textwidth}
+		\centering
+		\includegraphics[scale=0.35]{figures/banner2.png}
+		\caption{Banner}
+		\label{fig:sub1}
+	\end{subfigure}%
+	\begin{subfigure}{.3\textwidth}
+		\centering
+		\includegraphics[scale=0.35]{figures/k23.png}
+		\caption{$K_{2,3}$}
+		\label{fig:sub2}
+	\end{subfigure}
+	\begin{subfigure}{.3\textwidth}
+		\centering
+		\includegraphics[scale=0.35]{figures/p5.png}
+		\caption{$P_5$}
+		\label{fig:sub2}
+	\end{subfigure}
+	\caption{Một số ví dụ minh họa trong đó  $v_1 \nsim v_2$, $\{u,u_1,u_2\}$ là độc lập và  $\{u,u_1,u_2,v_1,v_2\}$ cảm sinh đồ thị $ banner$, $K_{2,3}$ hoặc  $P_5$.}
+	\label{fig:redundan}
+\end{figure}
+%
+\paragraph{Thuật toán MMIN (Modified MIN)}
+Thuật toán MMIN \index{MMIN} là sự kết hợp của kĩ thuật $\alpha$-dư thừa và thuật toán MIN.
+Cho $G$ là một đồ thị đơn,vô hướng bất kỳ, gọi $n = |V(G)|$. Thuật toán liên tiếp lựa chọn một đỉnh có bậc nhỏ nhất là $u$, sau đó kiểm tra và xóa đỉnh $u$ nếu $u$ là $\alpha$-dư thừa bằng cách áp dụng hệ quả 4.0.1. 
+Thuật toán MMIN trả về một tập độc lập cực đại.
 
 
 %%%%%%%%%%%%%%%
 \begin{algorithm}
 	%\algsetup{linenosize=\Large}
-	\caption{NMIN($G$)}\label{NMIN}
+	\caption{MMIN($G$)}\label{MMIN}
 	\begin{algorithmic}[1]
 		\INPUT Đồ thị $G$
 		\OUTPUT Một tập độc lập cực đại của G.
@@ -340,7 +377,8 @@ Cho $G$ là một đồ thị đơn,vô hướng bất kỳ, gọi $n = |V(G)|$.
 		\State Chọn $u \in V(H_i)$  sao cho $deg_{H_i}(u) = \delta(H_i)$;
 		\ForAll {$v_1,v_2 \in N_{H_i}(u)$ sao cho $v_1 \nsim v_2$}
 			\If {Không tồn tại $u_1,u_2 \in V(H_i)$ sao cho $\{u,u_1,u_2\}$ là độc lập và $\{u,u_1,u_2,v_1,v_2\}$ cảm sinh $P_5$ hoặc banner hoặc $K_{2,3}$}
-				\State $H_{i+1} := H_i - u$; $i := i+1$; \textbf{Break};
+				\State $H_{i+1} := H_i - u$; $i := i+1$;  \Comment{loại bỏ $u$ vì $u$ là $\alpha$-dư thừa}
+				\State \textbf{Break};
 			\EndIf
 			\State \textbf{end if}
 		\EndFor
@@ -352,7 +390,7 @@ Cho $G$ là một đồ thị đơn,vô hướng bất kỳ, gọi $n = |V(G)|$.
 	\end{algorithmic}
 \end{algorithm}
 %%%%%%%%%%%%%%%
-%Cho một đồ thị đơn vô hướng bất kì $G$, gọi $n = |V(G)|$ thì thuật toán NMIN cho ra một tập độc lập cực đại. Ta có thể tìm ra đỉnh có bậc nhỏ nhất trong $G$ trong thời gian $O(n^2)$. Cho $(v_1,u,v_2)$ cảm sinh $P_3$, ta có thể kiểm tra liệu có tồn tại hai đỉnh $u_1, u_2$ sao cho $(u, u_1,u_2)$ là độc lập và $\{u,u_1,u_2,v_1,v_2\}$ cảm sinh $K_{2,3}$, banner, hoặc $P_5$ trong thời gian $O(n^2)$.
+%Cho một đồ thị đơn vô hướng bất kì $G$, gọi $n = |V(G)|$ thì thuật toán MMIN cho ra một tập độc lập cực đại. Ta có thể tìm ra đỉnh có bậc nhỏ nhất trong $G$ trong thời gian $O(n^2)$. Cho $(v_1,u,v_2)$ cảm sinh $P_3$, ta có thể kiểm tra liệu có tồn tại hai đỉnh $u_1, u_2$ sao cho $(u, u_1,u_2)$ là độc lập và $\{u,u_1,u_2,v_1,v_2\}$ cảm sinh $K_{2,3}$, banner, hoặc $P_5$ trong thời gian $O(n^2)$.
 
 %Bài toán tìm tập độc lập có lực lượng hớn nhất và tính toán số độc lập của đồ thị có những ý nghĩa quan trọng trong nhiều lĩnh vực của đới sống, như lý thyết thông tin, sinh học, quản lý giao thông, viễn thông, v.v.\\
 %Đầu tiên ta sẽ nhắc lại một số khái niệm cơ bản về lý thuyết đồ thị và tập độc lập, những định lý liên quan đến tập độc lập cực đại, và một số ứng dụng của bài toán tìm tập độc lập cực đại.
@@ -376,12 +414,13 @@ Những kiến thức về cấu trúc của mạng truyền nhiễm cho phép t
 
 \subsection{Bài toán tìm tập độc lập cực đại và ứng dụng trong dịch tễ học}
 
-Một trong những quan tâm của dịch tễ học là làm sao tiêm phòng cho một nhóm cá thể với số lượng ít nhất có thể trong quần thể, nhằm ngăn chặn sự lan rộng của bệnh truyền nhiễm, như ta có thể tham khảo trong hình 2.
+Một trong những quan tâm của dịch tễ học là làm sao tiêm phòng cho một nhóm cá thể với số lượng ít nhất có thể trong quần thể, nhằm ngăn chặn sự lan rộng của bệnh truyền nhiễm, như ta có thể tham khảo trong hình \ref{fig:epidemiology}.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.7]{figures/Herd_immunity.png} 
-	\caption[Mô tả tác động của việc tiêm phòng đến sự truyền nhiễm của bệnh dịch]{Mô tả tác động của việc tiêm phòng đến sự truyền nhiễm của bệnh dịch (nguồn \href{https://en.wikipedia.org/wiki/Herd\_immunity}{Wikipedia}). Ta nhận thấy khi trong cộng đồng không có người được tiêm phòng (miễn nhiềm với bệnh dịch) thì bệnh dịch sẽ lan ra tự do. Khi chỉ có một số lượng nhỏ người được tiêm phòng cũng không ngăn được sự lan ra của bệnh dịch. Chỉ khi phần lớn cộng đồng được tiêm phòng, thì sự lan truyền của bệnh dịch mới được ngăn chặn.}
+	\includegraphics[scale=0.8]{figures/Herd_immunity_vn_2.png} 
+	\caption[Mô tả tác động của việc tiêm phòng đến sự truyền nhiễm của bệnh dịch]{Mô tả tác động của việc tiêm phòng đến sự truyền nhiễm của bệnh dịch. Ta nhận thấy khi trong cộng đồng không có người được tiêm phòng (miễn nhiềm với bệnh dịch) thì bệnh dịch sẽ lan ra tự do. Khi chỉ có một số lượng nhỏ người được tiêm phòng cũng không ngăn được sự lan ra của bệnh dịch. Chỉ khi phần lớn cộng đồng được tiêm phòng, thì sự lan truyền của bệnh dịch mới được ngăn chặn (Nguồn: \href{https://en.wikipedia.org/wiki/Herd\_immunity}{Wikipedia}, đã được tôi dịch sang tiếng việt).}
+	\label{fig:epidemiology}
 \end{figure}
 
 Dưới góc độ dịch tễ học, một cá thể đã tiêm phòng (miễn nhiễm với bệnh dịch) sẽ khó có thể bị mắc lại và cũng không thể trở thành cá thể trung gian lan truyền bệnh cho những cá thể khác được. 
@@ -447,30 +486,33 @@ Ví dụ khi biểu diễn vị trí của mộ tòa nhà, ta có thể sử d�
 Chỉ với ba loại hình dạng cơ bản trên, ta có thể biểu diễn các đối tượng địa lý trên trái đất. Dữ liệu đường bô Việt Nam được sử đụng trong báo cáo này cũng là dữ liệu GIS.
 \subsection{Mô hình hóa dữ liệu GIS đường bộ Việt Nam bằng đồ thị}
 \subsubsection{Dữ liệu GIS về giao thông đường bộ Việt Nam}
-Dữ liệu GIS về đường bộ Việt Nam, cụ thể là các trục đường quốc lộ, được sử dụng để tính toán trong báo cáo này được lấy từ nguồn [?] (hình 3 và 4).
+Dữ liệu GIS về đường bộ Việt Nam, cụ thể là các trục đường quốc lộ, được sử dụng để tính toán trong báo cáo này được lấy từ nguồn [?] (hình \ref{fig:vnhighway01} và \ref{fig:vnhighway02}).
 \begin{figure}
 	\centering
 	\begin{minipage}{0.6\textwidth}
 		\centering
 		\includegraphics[width=0.5\textwidth]{figures/vietnamroad.png} % first figure itself
 		\caption[dữ liệu đường bộ Việt Nam]{dữ liệu đường bộ Việt Nam, hiển thị bằng phần mềm QGIS.}
+		\label{fig:vnhighway01}
 	\end{minipage}\hfill
 	\begin{minipage}{0.6\textwidth}
 		\centering
 		\includegraphics[width=0.5\textwidth]{figures/vietnamroad03.png} % second figure itself
 		\caption[dữ liệu đường bộ Việt Nam được đặt trên bản đồ địa chính]{dữ liệu đường bộ Việt Nam được đặt trên bản đồ địa chính.}
+		\label{fig:vnhighway02}
 	\end{minipage}
 \end{figure}
 
 \subsubsection{Phương pháp mô hình đồ thị cho dữ liệu GIS đường bộ Việt Nam}
 Ban đầu khởi tạo đồ thị vô hướng rỗng $G$. Ánh xạ mỗi điểm đầu và điểm cuối của một đoạn đường với hai đỉnh tương ứng được thêm mới vào đồ thị $G$. Thêm một cạnh giữa hai đỉnh này vào đồ thị $G$, ứng với đoạn đường đó trên dữ liệu GIS. Các thuộc tính của đoạn đường trong dữ liệu GIS như tên, độ dài, mã code, được lưu như các thuộc tính của cạnh tương ứng trong đồ thị $G$.
 Mỗi điểm trên đồ thị $G$ ứng với một đầu mút của một hay nhiều đoạn đường trên dữ liệu GIS.
-Kết quả xử lý dữ liệu GIS để thu được đồ thị được biểu diễn trong hình 5. Các đỉnh của đồ thị được đặt vào các vị trí tương đối với nhau như trên địa lý.
+Kết quả xử lý dữ liệu GIS để thu được đồ thị được biểu diễn trong hình \ref{fig:vnhighwaynet}. Các đỉnh của đồ thị được đặt vào các vị trí tương đối với nhau như trên địa lý.
 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.5]{figures/vietnamroad.pdf} 
 	\caption[Đồ thị mạng đường bộ Việt Nam]{Đồ thị mạng đường bộ Việt Nam}
+	\label{fig:vnhighwaynet}
 \end{figure}
 
 \subsection{Những đặc trưng cơ bản trong phân tích đồ thị}
@@ -570,7 +612,7 @@ trong đó $n_{jk}$ là tổng số đường đi ngắn nhất giữa hai đỉ
 
 Công thức $C_B(i)$ trên đã được chuẩn hóa và đạt giá trị cao nhất là 1 khi mọi đường đi ngắn nhất trong đồ thị đều chứa đỉnh $i$. Một định nghĩa tương tự chỉ số trung tâm trung gian cho cạnh cũng có thể được định nghĩa.
 
-\subsubsection{Efficiency và straightness centrality}
+\subsubsection{Chỉ số trung tâm hiệu quả và chỉ số trung tâm thẳng}
 Bắt nguồn từ ý tưởng rằng hiệu quả của một mạng không gian có thể được tính bằng việc so sánh độ dài của đường đi ngắn nhất giữa các đỉnh và khoảng cách chim bay giữa các đỉnh đó \cite{efficiency01}. Chỉ số trung tâm hiệu quả (efficiency centrality) $C_E(i)$ và chỉ số trung tâm thẳng (straightness centrality) $C_S(i)$ được định nghĩa \cite{efficiency02}:
 \begin{equation}
 C_S(i) = \frac{1}{N-1} \mathlarger{\sum}_{j \in V(G); j \neq i} \frac{d^{\text{crowfly}}(i,j)}{d(i,j)}
@@ -624,6 +666,9 @@ Các
 	Ngoc C. Lê.
 	"Algorithms for the Maximum Independent Set Problem",
 	%
+	\bibitem{MINAlgorithm}
+	Murphy, O. J.
+	"Lower Bounds on the Stability Number of Graphs Computed in Terms of Degrees", Discrete Mathematics 90 (2 1991), pp. 207–211. issn: 0012-365X. 
 	\bibitem{MAXAlgorithm}
 	Griggs, J. R.
 	"Lower Bounds on the Independence Number in Terms of the Degrees",
@@ -634,7 +679,7 @@ Các
 	"A Note on Vertex Order for Stability Number",
 	\textit{Journal of Graph Theorey} 30 (2 1999), pp. 113–120.
 	%
-	\bibitem{alpharedundant}
+	\bibitem{alpharedundan}
 	Brandstädt, A. and Hammer, P. L.
 	\textit{"A Note on $\alpha$-redundant Vertices in Graphs"},
 	Discrete Applied Mathematics 108 (3 2001), pp. 301–308.
@@ -683,6 +728,7 @@ Các
 	 P. Erdos andA. Renyi.
 	 "On random graphs",
 	 Publicationes Mathematicae, pp. 290-297, 1959.
+	 %
 \end{thebibliography}
 
 \end{document}
