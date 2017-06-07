@@ -55,6 +55,13 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
+%===========thư viện cho header và footer==================
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\usepackage{mathptmx}
+\fancyhead[L]{Đồ án tốt nghiệp}
+\fancyhead[R]{\rightmark}
+
 % first page
 \linespread{1.25}
 \let\circledS\undefined
@@ -76,11 +83,11 @@
 \end{figure}
 \vspace*{1cm}
 
-\centerline{\large\bf ỨNG DỤNG LÝ THUYẾT ĐỒ THỊ TRONG BÀI TOÁN THỰC TẾ}
-\centerline{\large\bf Ứng dụng trong phân tích mạng giao thông và dịch tễ học}
+\centerline{\Large\bf MỘT SỐ VẤN ĐỀ ỨNG DỤNG LÝ THUYẾT ĐỒ THỊ}
+%\centerline{\large\bf Ứng dụng trong phân tích mạng giao thông và dịch tễ học}
 \vspace*{1cm}
-\centerline{\Large\bf ĐỒ ÁN TỐT NGHIỆP ĐẠI HỌC}
-\centerline{\Large\bf Chuyên ngành: Toán Tin}
+\centerline{\large\bf ĐỒ ÁN TỐT NGHIỆP ĐẠI HỌC}
+\centerline{\large\bf Chuyên ngành: Toán Tin}
 \vspace*{2cm}
 
 \hspace{1.95cm} \textbf{Giáo viên hướng dẫn } 
@@ -140,7 +147,11 @@
 % Create table of figures
 \thispagestyle{empty}
 \listoffigures
+\newpage
+\thispagestyle{empty}
 \listoftables
+\newpage
+\thispagestyle{empty}
 \listofalgorithms
 \addtocontents{loa}{\def\string\figurename{Algorithm}}
 \newpage
@@ -159,6 +170,7 @@ Cuối cùng em xin chúc các thầy cô giáo trong Trường Đại Học Bá
 %\vspace*{2cm}
 \hspace{95 mm}Ngô Trường Giang
 
+\fancyhead[R]{LỜI MỞ ĐẦU}
 \newpage
 \section{Lời mở đầu}
 %Những tiến bộ trong khoa học kĩ thuật trong những thâp kỷ gần đây đã cung cấp một lượng dữ liệu lớn về những mạng có kích thước lớn, có hàng triệu hoặc thậm trí hàng tỉ đỉnh như các mạng xã\
@@ -177,7 +189,7 @@ Ví dụ như cách mà mạng xã hội công việc LinkedIn giúp những ng�
 Trong báo cáo này, tôi sẽ trình bày ứng dụng của bài toán tìm tập độc lập cực đại trên các đồ thị cỡ lớn với ứng dụng trong dịch tễ học và ứng dụng phân tích mạng giao thông đường bộ Việt Nam, sử dụng một số kĩ thuật cơ bản trong phân tích dữ liệu đồ thị.
 
 \newpage
-\section{Tập độc lập cực đại và các thuật toán heuristic tham lam}
+\section{Tập độc lập cực đại và các thuật toán}
 \subsection{Các khái niệm cơ bản}
 \begin{definition}
 \cite{graphtextbook} Trong đồ thị đơn vô hướng $G = (V,E)$, một tập đỉnh con $S \subseteq V$ được gọi là \textbf{tập độc lập} \index{Tập độc lập} nếu không có hai đỉnh nào trong tập này kề nhau. Lực lượng của tập độc lập có kích thước lớn nhất được gọi là số độc lập của đồ thị, kí hiệu bởi $\alpha(G)$.	
@@ -435,10 +447,10 @@ Yêu cầu đặt ra có thể là tập cá thể không có quan hệ trực t
 Đây chính là một ứng dụng đơn giản của lý thuyết đồ thị trong dịch tễ học.
 
 \subsection{Kết quả các thuật toán tìm tập độc lập cực đại trên các đồ thị cỡ lớn}
-Sau đây tôi sẽ trình bày kết quả thực hiện các thuật toán tìm tập độc lập đã đề cập trong phần 4.3 (bảng 1), trên các bộ dữ liệu mạng cỡ lớn, và đánh giá kết quả của các thuật toán.
+Sau đây tôi sẽ trình bày kết quả thực hiện các thuật toán tìm tập độc lập đã đề cập trong phần 3, trên các bộ dữ liệu mạng cỡ lớn, và đánh giá kết quả của các thuật toán.
 
 \begin{table}[!h]
-	\caption[độ chính xác của các phương pháp trên các dữ liệu kiểm thử]{Kết quả chạy các thuật toán tìm tập độc lập cực đại với các dữ liệu đường bộ của các thành phố trên thế giới. Cột thứ nhất là tên thành phố, cột thứ hai và thứ ba lần lượt là số đỉnh và số cạnh của đồ thị. Các cột còn lại là kích thước của tập độc lập tìm được ứng với mỗi thuật toán.}
+	\caption[Kết quả chạy các thuật toán tìm tập độc lập cực đại với các dữ liệu đường bộ]{Kết quả chạy các thuật toán tìm tập độc lập cực đại với các dữ liệu đường bộ của các thành phố trên thế giới. Cột thứ nhất là tên thành phố, cột thứ hai và thứ ba lần lượt là số đỉnh và số cạnh của đồ thị. Các cột còn lại là kích thước của tập độc lập tìm được ứng với mỗi thuật toán.}
 	\centering
 	\csvautotabular{MIS.csv}
 \end{table}
@@ -448,6 +460,7 @@ Từ kết quả chạy thuật toán trong bảng 1, ta có thể thấy kích 
 
 \newpage
 \section{Ứng dụng lý thuyết đồ thị trong phân tích mạng giao thông Việt Nam}
+\subsection{Các khái niệm trong giao thông vận tải}
 Theo Wikipedia, \textbf{giao thông vận tải} \index{giao thông vận tải} là quá trình dịch chuyển của con người, động vật và hàng hóa từ nơi này đến nơi khác. Những loại hình giao thông vận tải gồm có: đường không, đường sắt, đường bộ, đường thủy, đường ống, dây cáp và ngoài không gian (vũ trụ). Những yếu tố cơ bản trong hệ thống thông vận tải bao gồm: \textbf{cơ sở hạ tầng}, \textbf{phương tiện} và \textbf{vận hành}. Giao thông vận tải rất quan trọng vì nó cho phép sự trao đổi qua lại giữa con người, vốn là nguồn gốc sự phát triển của nền văn minh.
 
 Cơ sở hạ tầng giao thông vận tải bao gồm sự xây dựng cố định của các loại đường đi như đường bộ, đường sắt, đường thủy, đường ống,... và các địa điểm đầu cuối như sân bay, nhà ga, kho hàng, cảng biển,... Những địa điểm đầu cuối có thể được sử dụng như nơi trung gian vận chuyển con người và hàng hóa hoặc là nơi lưu trữ.
@@ -558,15 +571,15 @@ Kết quả xử lý dữ liệu GIS để thu được đồ thị được bi�
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.45]{figures/vnroadgraphtotaledit.pdf} 
+	\includegraphics[scale=0.6]{figures/vnroadgraphtotaledit.png} 
 	\caption[Đồ thị đường bộ Việt Nam]{Đồ thị đường bộ Việt Nam, tổng quan và chi tiết một vùng}
 	\label{fig:vnhighwaynet}
 \end{figure}
 
 \subsection{Những đặc trưng cơ bản trong phân tích đồ thị}
-Một trong những bài toán trong phân tích đồ thị là quyết định độ quan trong của một đỉnh hay một cạnh. Chỉ số \textbf{tính trung tâm} \index{tính trung tâm} (centrality) của một đỉnh trong đồ thị thường chỉ ra mức độ ảnh hưởng của một đỉnh đó đến toàn bộ đồ thị. Có rất nhiều loại chỉ số trung tâm khác nhau và mỗi chỉ số có cách tính cũng như ý nghĩa khác nhau trong đánh giá độ quan trọng của một đỉnh hay cạnh của đồ thị. Sau đây ta giới thiệu những chỉ số trung tâm cơ bản và ý nghĩa của chúng trong mạng giao thông.
+Một trong những bài toán của phân tích đồ thị là quyết định độ quan trong của một đỉnh hay một cạnh, tìm ra . Chỉ số \textbf{tính trung tâm} \index{tính trung tâm} (centrality) của một đỉnh hoặc một cạnh trong đồ thị thường chỉ ra mức độ ảnh hưởng của một đỉnh đó đến toàn bộ đồ thị. Có rất nhiều loại chỉ số trung tâm khác nhau và mỗi chỉ số có cách tính cũng như ý nghĩa khác nhau trong đánh giá độ quan trọng của một đỉnh hay cạnh của đồ thị. Sau đây ta giới thiệu những chỉ số trung tâm cơ bản và ý nghĩa của chúng trong mạng giao thông.
 
-\subsubsection{Khoảng cách, tâm sai, bán kính, đường kính của đồ thị}
+\subsubsection{Khoảng cách, tâm sai, bán kính, đường kính, mật độ của đồ thị}
 Trước khi đề cập đến các chỉ số trung tâm (centrality), ta sẽ nhắc lại một số khái niệm cơ bản về lý thuyết đồ thị được sử dụng trong phần này.
 
 \cite{graphtextbook} Cho đồ thị $G=(V,E)$, \textbf{khoảng cách} \index{khoảng cách} giữa hai đỉnh $u$ và $v$ của đồ thị $G$ là độ dài của đường đi ngắn nhất giữa hai đỉnh. Khoảng cách này kí hiệu là $d(u,v)$.
@@ -591,6 +604,21 @@ Trước khi đề cập đến các chỉ số trung tâm (centrality), ta sẽ
 	rad(G) \leq diam(G) \leq 2 * rad(G)
 \end{equation}
 
+\cite{complexnetwork} Mật độ của đồ thị $G=(V,E)$, kí hiệu là $\rho(G)$, là tỉ lệ giữa số cạnh của đồ thị và số cạnh của một đồ thị đầy đủ có cùng số đỉnh:
+\begin{equation}
+	\rho(G) = \frac{2m}{n(n-1)}
+\end{equation}
+
+Nếu mật độ của đồ thị không thay đổi nhiều khi $n \rightarrow \infty$ thì đồ thị được gọi là đồ thị dày (dense graph). Ngược lại, nếu $\rho \rightarrow 0$ khi $n \rightarrow \infty$ thì đồ thị được gọi là đồ thị thưa (sparse graph).
+
+\subsubsection{Phân phối bậc}
+Vẽ biểu đồ quan hệ giữa số bậc của đỉnh và số lượng đỉnh có bậc đó cho ta phân bố bậc của đồ thị. Phân phối bậc $P(k)$ của một đồ thị vô hướng $G$ là xác suất có một đỉnh nào đó của đồ thị có bậc là $k$.
+\begin{definition}
+	Phân phối bậc $P(k)$ của bậc $k$ trong đồ thị $G$ được tính bằng tỉ lệ giữa số đỉnh bậc $k$ trong $G$ trên tổng số đỉnh của đồ thị.
+	\begin{equation}
+		P(k) = \frac{n_k}{n}
+	\end{equation}
+\end{definition}
 \subsubsection{Hệ số phân cụm}
 \begin{definition}
 	\cite{complexnetwork}Cho đồ thị $G = (V,E)$, hệ số phân cụm \index{hệ số phân cụm} của một đỉnh $v \in V(G)$ kí hiệu là $cc(v)$ được định nghĩa là tỉ lệ giữa số cạnh tồn tại giữa các lân cận của đỉnh $v$ và số dạnh tối đa có thể có giữa những lân cận. Ta có công thức:
@@ -651,7 +679,7 @@ C_C(i) = \frac{N-1}{\sum_{j \in V} d(i,j)}
 trong đó $d(i,j)$ là khoảng cách giữa hai đỉnh $i$ và $j$.
 
 Vì trong đồ thị, chỉ số trung tâm gần gũi phụ thuộc rất nhiều vào vị trí của đỉnh, đo đó trong mạng giao thông, các đỉnh ở vị trí trung tâm địa lý chắc chắn sẽ có chỉ số trung tâm gần gũi cao.
-
+\subsubsection{Chỉ số trung tâm trung gian}
 Chỉ số \textbf{trung tâm trung gian} \index{trung tâm trung gian} (betweeness centrality) của một đỉnh là số đường đinh ngắn nhất giữa tất cả các đỉnh mà có đi qua đỉnh đó \cite{centrali02}. Công thức của chỉ số trung tâm không gian được chuẩn hóa:
 \begin{equation}
 	C_B(i) = \frac{1}{(N-1)(N-2)} \sum_{j,k \in V(G); j \neq k; k\neq i; j \neq i} \frac{n_{jk}(i)}{n_{jk}}
@@ -671,19 +699,85 @@ C_S(i) = \frac{1}{N-1} \mathlarger{\sum}_{j \in V(G); j \neq i} \frac{d^{\text{c
 trong đó $d^{\text{crowfly}}(i,j)$ là khoảng cách chim bay giữa hai đỉnh $i$,$j$ của mạng.
 
 \subsection{Phân tích mạng đường bộ Việt Nam}
-\newpage
-\subsubsection{Phân tích các tham số cơ bản}
-Hình \ref{fig:degreedist} biểu diễn biểu phân phối bậc của các đỉnh trong đồ thị mạng đường bộ Việt Nam. Trong dữ liệu GIS đường bộ Việt Nam có rất nhiều đoạn đường ngắn, nối tiếp nhau, của cùng một tên đường, nên ta có thể thấy là số đỉnh bậc 2 chiếm đa số trong phân phối bậc của đỉnh. Còn lại số đỉnh bậc 1,3 và 4 của đồ thị khá hợp lý, tương tự với kết quả thu được trong phân tích mạng giao thông của Thụy Sĩ \cite{swissroad}, số đỉnh bậc 3 chiếm đa phần nếu không tính các đỉnh bậc 2 sinh ra do dữ liệu chưa chuẩn.
-
-Các 
+\subsubsection{Phân tích các chỉ số cơ bản}
+Hình \ref{fig:degreedist} biểu diễn biểu phân phối bậc của các đỉnh trong đồ thị mạng đường bộ Việt Nam. Trong dữ liệu GIS đường bộ Việt Nam có rất nhiều đoạn đường ngắn, nối tiếp nhau, của cùng một tên đường, nên ta có thể thấy là số đỉnh bậc 2 chiếm đa số trong phân phối bậc của đỉnh. Còn lại số đỉnh bậc 1, 3 và 4 của đồ thị khá hợp lý, khi có phân phối bậc tương tự với kết quả thu được trong phân tích mạng giao thông của Thụy Sĩ \cite{swissroad}. Số đỉnh bậc 3 và 4 chiếm đa phần nếu không tính các đỉnh bậc 2 sinh ra do dữ liệu chưa chuẩn, không có đỉnh bậc 5 và 6 nào trong đồ thị.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.8]{figures/degreedist.pdf} 
+	\includegraphics[scale=0.9]{figures/degreedist.pdf} 
 	\caption[Phân phối bậc của đỉnh trong mạng đường bộ Việt Nam]{Phân phối bậc của đỉnh trong mạng đường bộ Việt Nam.}
 	\label{fig:degreedist}
 \end{figure}
-\subsubsection{Phân tích các chỉ số trung tâm}
+
+Nếu không tính các đỉnh bậc 2, phân phối bậc của độ thị đường bộ Việt Nam sẽ có dạng như hình \ref{fig:degreedist2}.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.9]{figures/degreedist3.pdf} 
+	\caption[Phân phối bậc của đỉnh trong mạng đường bộ Việt Nam khi loại bỏ đi các đỉnh bậc 2]{Phân phối bậc của đỉnh trong mạng đường bộ Việt Nam khi loại bỏ đi các đỉnh bậc 2.}
+	\label{fig:degreedist2}
+\end{figure}
+
+Bảng \ref{table:measures} tổng hợp các chỉ số cơ bản của đồ thị:
+\begin{table}[!h]
+	\caption[Các chỉ số phân tích đồ thị đường bộ Việt Nam]{Các chỉ số phân tích đồ thị đường bộ Việt Nam}
+	\centering
+	\begin{tabular}{ |c|c| } 
+		\hline
+		Tên chỉ số & Giá trị \\ 
+		\hline
+		 Bán kính & 193\\
+		 Đường kính & 386\\ 
+		 Độ dài đường đi trung bình không có trọng số & 132.09448\\
+		 Độ dài đường đi trung bình dựa trên độ dài đoạn đường & 885.35909 km\\ 
+		 Hệ số phân cụm trung bình & 0.003\\
+		 Mật độ của đồ thị & 0.001\\ 
+		\hline
+	\end{tabular}
+	\label{table:measures}
+\end{table}
+
+Các chỉ số phân tích trong bảng \ref{table:measures} đều cho thấy đồ thị đường bộ Việt Nam có tính chất của đồ thị thưa, với bán kính và đường kính lớn, tức là cần đi qua nhiều đỉnh, đi đoạn đường dài, để đến được các đỉnh khác trong đồ thị. Hệ số phân cụm trung bình thấp và mật độ của đồ thị thấp cũng thể hiện điều này.
+Để có thêm thông tin về tính chất của mạng giao thông đường bộ Việt Nam, ta xét đến một chỉ số quan trọng, chính là chỉ số trung tâm trung gian.
+
+\subsubsection{Phân tích chỉ số trung tâm trung gian}
+Trong mạng giao thông, ý nghĩa trực tiếp của chỉ số trung tâm trung gian, vốn được tính bằng số lượng đường đi ngắn nhất đi qua đỉnh hay cạnh đó, chính là mức độ tải mà mỗi đỉnh hay cạnh phải chịu (node load, link load), với giả thiết rằng các phương tiện tham gia giao thông đều chọn đường ngắn nhất để đi.
+
+Trong báo cáo này, các đường đi ngắn nhất và chỉ số trung tâm trung gian được tính dựa trên trọng số hay chi phí là độ dài của các đoạn đường, để phản ánh thực tế cách đi chuyển của các phương tiện, hơn là coi mỗi cạnh trong đồ thị đều có trong số là 1.
+
+Hình \ref{fig:betweeness} biểu diễn kết quả tính toán chỉ số trung tâm trung gian cho các đỉnh của đồ thị đường bộ Việt Nam, được thể hiện dựa trên quan hệ tương đối giữa kích thước của các đỉnh trong đồ thị, các đỉnh có chỉ số trung tâm trung gian cao sẽ có bán kính lớn, và ngược lại.
+Ta có thể thấy là những nút giao thông có chỉ số trung tâm trung gian cao, hay mức độ tải phải chịu lớn, thường nằm trên các trục đường quốc lộ chính, nối các tỉnh với nhau. Ví dụ như các nút giao thông trên đường Quốc Lộ 1 dọc từ thành phố Hà Nội đến Đà Nẵng đều có chỉ số trung tâm trung gian cao, trong khi trục đường quốc lộ song song với Quốc Lộ 1 lại không có chỉ số trung tâm trung gian cao như vậy.
+
+Tương tự, ta có thể thấy tại khu vực Tây Nguyên, đường Quốc Lộ 14 lại là tuyến đường có các nút giao thông với chỉ số trung tâm trung gian cao. Ở khu vực Nam Bộ, đường Quốc Lộ 1 lại có chỉ số trung tâm trung gian cao trở lại, thể hiện sự kết nối giữa các tỉnh khu vực Tây Nguyên và các tỉnh khu vực Nam Bộ.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.5]{figures/vietnamroadbetweeness.pdf} 
+	\caption[Đồ thị đường bộ Việt Nam biểu diễn chỉ số trung tâm trung gian]{Đồ thị đường bộ Việt Nam biểu diễn chỉ số trung tâm trung gian}
+	\label{fig:betweeness}
+\end{figure}
+
+Về mặt phân phối, ta có thể thấy trong hình \ref{fig:between}, hai biểu đồ biểu diễn tần xuất (histogram) của chỉ số trung tâm trung gian của các đỉnh \ref{fig:betweenessdist} và các cạnh \ref{fig:betweenessedgedist} của đồ thị đường bộ Việt Nam. Có thể nhận thấy rằng trong cả hai biểu đồ, số lượng đỉnh (cạnh) có chỉ trung tâm trung gian thấp chiếm đa số, còn số lượng đỉnh có chỉ số trung tâm trung gian cao và rất cao là rất thấp.
+
+\begin{figure}[!h]
+	\centering
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[scale=0.5]{figures/betweeness_dist.pdf}
+		\caption{Chỉ số trung tâm trung gian cạnh}
+		\label{fig:betweenessdist}
+	\end{subfigure}%
+	\begin{subfigure}{.5\textwidth}
+		\centering
+		\includegraphics[scale=0.5]{figures/betweeness_edge_dist.pdf}
+		\caption{Chỉ số trung tâm trung gian cạnh}
+		\label{fig:betweenessedgedist}
+	\end{subfigure}
+	\caption{Biểu đồ xắp xếp chỉ số trung tâm trung gian đồ thị đường bộ Việt Nam}
+	\label{fig:between}
+\end{figure}
+
+\newpage
 \section{Kết luận}
 
 %%%%%
