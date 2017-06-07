@@ -393,22 +393,24 @@ Thuật toán MMIN trả về một tập độc lập cực đại.
 %Cho một đồ thị đơn vô hướng bất kì $G$, gọi $n = |V(G)|$ thì thuật toán MMIN cho ra một tập độc lập cực đại. Ta có thể tìm ra đỉnh có bậc nhỏ nhất trong $G$ trong thời gian $O(n^2)$. Cho $(v_1,u,v_2)$ cảm sinh $P_3$, ta có thể kiểm tra liệu có tồn tại hai đỉnh $u_1, u_2$ sao cho $(u, u_1,u_2)$ là độc lập và $\{u,u_1,u_2,v_1,v_2\}$ cảm sinh $K_{2,3}$, banner, hoặc $P_5$ trong thời gian $O(n^2)$.
 
 %Bài toán tìm tập độc lập có lực lượng hớn nhất và tính toán số độc lập của đồ thị có những ý nghĩa quan trọng trong nhiều lĩnh vực của đới sống, như lý thyết thông tin, sinh học, quản lý giao thông, viễn thông, v.v.\\
-%Đầu tiên ta sẽ nhắc lại một số khái niệm cơ bản về lý thuyết đồ thị và tập độc lập, những định lý liên quan đến tập độc lập cực đại, và một số ứng dụng của bài toán tìm tập độc lập cực đại.
+%Đầu tiên ta sẽ nhắc lại một số khái niệm cơ bản về lý thuyết đồ thị và tập độc lập, những định lý liên quan đến tập độc lập cực đại, và một số ứng dụng của bài toán tìm tập độc lập cực đại. 
+
 
 \newpage
 \section{Ứng dụng của tập độc lập cực đại trong dịch tễ học}
 \subsection{Giới thiệu về dịch tễ học}
 Theo Bonita R, Beaglehole R, Kjellstrom K.\cite{BasicEpid}, \textbf{dịch tễ học}  \index{dịch tễ học} là khoa học nền tảng của y tế công cộng, được định nghĩa là "việc nghiên cứu sự phân bố của các yếu tố quyết định của các tình trạng hay sự kiện liên quan đến sức khỏe trong các quần thể xác định và việc ứng dụng những nghiên cứu này vào phòng ngừa và kiểm soát các vấn đề sức khỏe". 
+Các nhà dịch tễ học không chỉ quan tâm đến tử vong, bệnh tật mà còn quan tâm tới cả trình trạng sức khỏe và quan trọng nhất là giải pháp tăng cường sức khỏe cho cộng đồng.
 
-Các nhà dịch tễ học không chỉ quan tâm đến tử vong, bệnh tật mà còn tới cả trình trạng sức khỏe và quan trọng nhất là giải pháp tăng cường sức khỏe cho cộng đồng.
+Trọng tâm của các nghiên cứu dịch tễ học là các quần thể xác định về địa lý hoặc các khía cạnh khác. Một quần thể dược đề cập trong dịch tễ học thường là quần thể được chọn từ một khu vực đặc thù vào một thời điểm cụ thể. Cấu trúc của các quần thể khác nhau ở các vùng địa lý khác nhau ở các thời điểm khác nhau có thể rất khác nhau. Nghiên cứu dịch tễ học rất quan tâm đến sự giao động này.
 
-Trọng tâm của các nghiên cứu dịch tễ học là các quần thể xác định về địa lý hoặc các khía cạnh khác. Một quần thể dược đề cập trong dịch tễ học thường là quần thể được chọn từ một khu vực đặc thù hay một nước vào một thời điểm cụ thể. Cấu trúc của các quần thể khác nhau ở các vùng địa lý khác nhau ở các thời điểm khác nhau có thể rất khác nhau. Nghiên cứu dịch tễ học rất quan tâm đến sự giao động này.
-
-Dịch tễ học cùng với các thành tựu trong y học đã đạt được nhiều thành tựu không chỉ trong nghiên cứu mà còn trong thực tế, với những đóng góp lớn trong thanh toán các bệnh dịch lớn cũng nhưng phát hiện nguyên nhân của nhiều căn bệnh trong xã hội. 
-Một trong những thành tựu phải kể đến là việc phát hiện ra rằng nhiễm khuẩn đậu bò sẽ góp phần bảo vệ chống virut đậu mùa, hay tìm ra nguyên nhân gây ra bệnh Minamata tại Nhật Bản là do ô nhiễm môi trường gây nhiễm độc Methyl thủy ngân.
+Dịch tễ học cùng với ngành y đã đạt được nhiều thành tựu không chỉ trong nghiên cứu mà còn trong thực tế, với những đóng góp lớn trong thanh toán các bệnh dịch lớn cũng như phát hiện nguyên nhân của nhiều căn bệnh trong xã hội. 
+Một trong những thành tựu có thể kể đến là việc phát hiện ra rằng nhiễm khuẩn đậu bò sẽ góp phần bảo vệ chống virut đậu mùa, phải mất 200 năm sau mới được chứng minh bằng y học, hay tìm ra nguyên nhân gây ra bệnh Minamata tại Nhật Bản là do ô nhiễm môi trường gây nhiễm độc Methyl thủy ngân chứ không phải là một căn bệnh co vi rút gây ra.
 
 \subsection{Dịch tễ học và lý thuyết đồ thị}
-Đồ thị (hay mạng) và dịch tễ học về các bệnh truyền nhiễm có mối liên kết chặt chẽ với nhau. Nền tảng của dịch tễ học và những mô hình dịch tễ dựa trên sự phân bố ngẫu nhiên của quần thể, nhưng trong thực tế, mỗi cá thể trong quần thể có quan hệ với một tập những cá thể khác mà cá thể này có thể lây nhiễm hoặc bị lây nhiễm bệnh. Kết hợp tất các các mối quan hệ này, coi mỗi cá thể là một đỉnh của đồ thị và các quan hệ là các cạnh giữa các đỉnh cho ta một mạng truyền nhiễm của quần thể.
+Trước khi đề cập đến ứng dụng của lý thuyết đồ thị, ta cần làm rõ cách sử dụng một số khái niệm. Trong một vài tài liệu về đồ thị và mạng, có sự phân biệt giữa khái niệm đồ thị (graph) và khái mạng (network), khi định nghĩa rằng mạng là đồ thị có thêm các thuộc tính và thông tin tại các đỉnh và các cạnh. Khái niệm đỉnh và cạnh trong đồ thị cũng có thể được thay thế bằng khái niệm nút (node) và cung (arc) trong mạng. Trong báo cáo này, khái niệm mạng và khái niệm đồ thị được sử dụng đan xen lẫn nhau, tương tự nhau.
+
+Lý thuyết đồ thị và dịch tễ học về các bệnh truyền nhiễm có mối liên kết chặt chẽ với nhau. Nền tảng của dịch tễ học và những mô hình dịch tễ dựa trên sự phân bố ngẫu nhiên của quần thể, nhưng trong thực tế, mỗi cá thể trong quần thể có quan hệ với một tập những cá thể khác, mà cá thể này có thể lây nhiễm hoặc bị lây nhiễm bệnh. Kết hợp các các mối quan hệ này lại, coi mỗi cá thể là một đỉnh của đồ thị và các quan hệ lây nhiễm là các cạnh giữa các đỉnh cho ta một mạng truyền nhiễm của quần thể.
 
 Những kiến thức về cấu trúc của mạng truyền nhiễm cho phép tính toán những chỉ số trong mô hình dịch tễ học từ hành vi lây nhiễm của những cá thể. Do đó, những đặc tính của mạng truyền nhiễm trở nên quan trọng trong củng cố những hiểu biết và dự đoán về các mô thức truyền nghiễm và đo lường tác động của những can thiệp vào quần thể.
 
@@ -464,7 +466,7 @@ Trong phần này của báo cáo, tôi sẽ trình bày quá trình xây dựng
 %Mọi nền kinh tế đều bao gồm các hoạt động diễn ra ở những địa điểm khác nhau, và sự dịch chuyển trao đổi phải diễn ra trong hệ thống giao thông vận tải. Nếu không có sự dịch chuyển thì hệ thống giao thông vận tải sẽ không có ý nghĩa và nếu không có giao thông vận tải thì sự dịch chuyển không thể xảy ra. Mối quan hệ phụ thuộc qua lại này có thể được nhìn nhận như một quan hệ cung-cầu trong kinh tế học, nhưng áp dụng đối với giao thông vận tải.
 %
 %Cung nhau khả năng cung cấp dịch vụ vận tải, là khả năng phục vụ của hệ thống cơ sở hạ tầng giao thông. Cung của hệ thống giao thông vận tải có thể được biểu diễn như 
-\subsection{GIS}
+\subsection{Khoa học thông tin địa lý (GIS)}
 Khái niệm GIS thường được hiểu là viết tắt của Geographical Information System, tức hệ thống thông tin địa lý, là một hệ thống máy tính, lưu trữ, xử lý và hiển thị dữ liệu địa lý.
 GIS cũng có thể được hiểu là Geographical Information Sciences, tức khoa học về thông tin địa lý, được sử dụng bởi các hệ thống thông tin địa lý. Trong cáo cáo này, GIS được mặc định là viết tắt của khoa học thông tin địa lý.
 \subsubsection{Các khái niệm cơ bản trong GIS}
@@ -482,7 +484,7 @@ Một điểm được biểu diễn bằng vị trí địa lý của nó, đi 
 Đường và đa giác thực chất là danh sách của những điểm theo một thứ tự nhất định.
 Đa giác là đường mà điểm đầu và điểm cuối trùng nhau.
 Ví dụ khi biểu diễn vị trí của mộ tòa nhà, ta có thể sử dụng điểm, khi biểu diễn hình dạng của một hòn đảo, ta có thể sử dụng đa giác, khi biểu diễn biên giới, ta có thể sử dụng đường.
-
+\subsubsection{Các loại dữ liệu cơ bản trong GIS}
 Chỉ với ba loại hình dạng cơ bản trên, ta có thể biểu diễn các đối tượng địa lý trên trái đất. Dữ liệu đường bô Việt Nam được sử đụng trong báo cáo này cũng là dữ liệu GIS.
 \subsection{Mô hình hóa dữ liệu GIS đường bộ Việt Nam bằng đồ thị}
 \subsubsection{Dữ liệu GIS về giao thông đường bộ Việt Nam}
@@ -504,22 +506,68 @@ Dữ liệu GIS về đường bộ Việt Nam, cụ thể là các trục đư�
 \end{figure}
 
 \subsubsection{Phương pháp mô hình đồ thị cho dữ liệu GIS đường bộ Việt Nam}
-Ban đầu khởi tạo đồ thị vô hướng rỗng $G$. Ánh xạ mỗi điểm đầu và điểm cuối của một đoạn đường với hai đỉnh tương ứng được thêm mới vào đồ thị $G$. Thêm một cạnh giữa hai đỉnh này vào đồ thị $G$, ứng với đoạn đường đó trên dữ liệu GIS. Các thuộc tính của đoạn đường trong dữ liệu GIS như tên, độ dài, mã code, được lưu như các thuộc tính của cạnh tương ứng trong đồ thị $G$.
-Mỗi điểm trên đồ thị $G$ ứng với một đầu mút của một hay nhiều đoạn đường trên dữ liệu GIS.
+Vì mạng giao thông là đối tượng thực tế, nên dữ liệu giao thông cũng giống với những dữ liệu thực tế khác, rất đa dạng và đa chiều. 
+Tùy thuộc vào từng bài toán, với mục tiêu khác nhau, ta sẽ có một mô hình toán học phù hợp cho quá trình giải quyết bài toán đó.
+Trong báo cáo này, tôi sử dụng mô hình toán học đơn giản là đồ thị vô hướng để mô hình mạng giao thông đường bộ Việt Nam. 
+
+Nguyên tắc xây dựng mô hình đồ thị của mạng giao thông:
+\begin{itemize}
+	\item Mỗi đỉnh trong đồ thị xây dựng được, ứng với một nút giao thông,
+	\item Mỗi cạnh nối hai đỉnh trong đồ thị tương ứng với một đoạn đường trên bản đồ. Các đường quốc lộ Việt Nam đều là đường hai chiều nên ta sử dụng đồ thị vô hướng để biểu diễn mạng giao thông.
+	\item Các đỉnh và cạnh của đồ thị ngoài có định đanh duy nhất, còn chứa thông tin thu được từ dữ liệu GIS đường bộ Việt Nam.
+	\item Mỗi đỉnh của đồ thị có hai trường thuộc tính kinh độ và vĩ độ của nút giao thông ứng với đỉnh đó.
+	\item Mỗi cạnh của đồ thị chứa các thuộc tính của đoạn đường mà nó biểu diễn, ví dụ như tên đường, loại đường, độ dài hay tốc độ tối đa cho phép.
+\end{itemize}
+
+Chi tiết các bước xây dựng đồ thị đường bộ Việt Nam từ dữ liệu GIS được mô tả trong bảng sau:
+%
+\begin{table}[!h]
+	\caption[Thủ tục xây dựng đồ thị đường bộ Việt Nam.]{Thủ tục xây dựng đồ thị đường bộ Việt Nam.}
+	\begin{tabular}{ |m{15cm}| } 
+		\hline
+		\begin{enumerate}
+			\item Đọc dữ liệu GIS đường bộ Việt Nam, trích lấy danh sách đối tượng đặc trưng (feature), gọi tắt là \textbf{FEAT\_LIST}. Mỗi đặc trưng đại diện cho một đoạn đường thực tế, được biểu diễn như một polyline - danh sách các điểm tiêu biểu nằm trên đoạn đường đó. Mỗi đối tượng đặc trưng cũng chứa các thuộc tính của đoạn đường đó.
+			\item Tạo một đồ thị rỗng $G = (V,E), n(V) = 0$.
+			\item Với mỗi đặc trưng trong \textbf{FEAT\_LIST}:
+			\begin{itemize}
+				\item Lấy thông tin tọa độ điểm đầu $P_0$ và điểm cuối $P_1$ của đặc trưng (đoạn đường) đó.
+				\item Tương ứng với hai điểm $P_0$ và $P_1$, thêm hai đỉnh mới $u_0$ và $u_1$ vào đồ thị $G$. Tọa độ của các đỉnh chính là tọa độ của điểm tương ứng của đặc trưng.
+				\item Tạo cạnh giữa $u_0$ và $u_1$ ứng với đoạn đường mà đặc trưng mô tả.
+				\item Thêm các thuộc tính của đặc trưng vào cạnh $(u_0,u_1)$ vừa tạo.
+			\item Lưu đồ thị $G$ dưới định dạng có thể đọc được bởi máy tính.
+			\end{itemize}
+		\end{enumerate}
+		\\
+		\hline
+	\end{tabular}
+	\label{table:graphcreation}
+\end{table}
+
+Bảng \ref{table:graphcreation} chỉ mô tả các bước cơ bản trong xây dựng đồ thị giao thông Việt Nam. Có rất nhiều trường hợp cần phải xử lý để thu được đồ thị đúng với mạng giao thông được dữ liệu GIS mô tả. Qua quá trình xử lý dữ liệu GIS xây dựng đồ thị giao thông, tôi rút ra một số chú ý:
+\begin{itemize}
+	\item Chỉ thêm những đỉnh có tọa độ mới vào đồ thị $G$. Nếu một hoặc hai đầu mút của một đoạn đường có tọa độ trùng với một đỉnh của đồ thị $G$, tức là tồn tại một đoạn đường được xử lý trước đó, có chung đầu mút với đoạn đường hiện tại. Khi đó, ta chỉ lấy ra định danh của các đỉnh đó chứ không tạo đỉnh mới. Sau đó tiếp tục thêm cạnh giữa các đỉnh ứng với đoạn đường đó.
+	
+	\item Xử lý giao nhau là một công đoạn quan trọng trong xây dựng đồ thị. Với những trường hợp một trong hai đầu mút của một đoạn đường $A$ lại nằm giữa một đoạn đường $B$ khác (trường hợp ngã ba), thì đoạn đường $B$ phải bị chia làm hai đoạn đường con $B_1$ và $B_2$ nối tiếp nhau. Hai đoạn đường con này có các thuộc tính giống với thuộc tính của đoạn đường $B$, trừ thuộc tính độ dài đoạn đường phải được tính lại cho mỗi đoạn đường, và các tham số khác liên quan đến tính chất vật lý của đoạn đường.
+	
+	\item Khi xử lý tọa độ địa lý của các điểm, cần thống nhất về độ chính xác của tọa độ, tránh trường hợp quá trình làm tròn xảy ra gây sai lệch dữ liệu, như hai điểm rất gần nhau bị chập làm một; hay ngược lại hai điểm thực ra là một nhưng vì độ chính xác (ví dụ số chữ số phần thập phân) khác nhau nên lại bị coi là hai điểm khác nhau, dẫn đến mất tính liên thông của đồ thị thu được.
+	
+	\item Một số dữ liệu địa lý được thu thập sử dụng hệ tọa độ địa lý cầu (Spherical Coordinates), trong đó đơn vị của tọa độ các điểm là độ. Hệ tọa độ này không cho phép tính khoảng cách giữa các điểm theo đơn vị mét. Vì vậy cần áp dụng một phép chiếu lên dữ liệu này, tùy vào vị trí địa lý của vùng dữ liệu cũng như phép chiếu được chọn. Kết quả của phép chiếu là tọa độ mới của tất cả các điểm, trong hệ tọa độ địa lý mới. Lúc đó việc tính toán khoảng cách thực tế mới được áp dụng.
+\end{itemize}
+
 Kết quả xử lý dữ liệu GIS để thu được đồ thị được biểu diễn trong hình \ref{fig:vnhighwaynet}. Các đỉnh của đồ thị được đặt vào các vị trí tương đối với nhau như trên địa lý.
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.5]{figures/vietnamroad.pdf} 
-	\caption[Đồ thị mạng đường bộ Việt Nam]{Đồ thị mạng đường bộ Việt Nam}
+	\includegraphics[scale=0.45]{figures/vnroadgraphtotaledit.pdf} 
+	\caption[Đồ thị đường bộ Việt Nam]{Đồ thị đường bộ Việt Nam, tổng quan và chi tiết một vùng}
 	\label{fig:vnhighwaynet}
 \end{figure}
 
 \subsection{Những đặc trưng cơ bản trong phân tích đồ thị}
-Một trong những bài toán trong phân tích đồ thị là quyết định độ quan trong của một đỉnh hay một cạnh. Chỉ số \textbf{tính trung tâm} \index{tính trung tâm} (centrality) của một đỉnh trong đồ thị thường chỉ ra mức độ ảnh hưởng của một đỉnh đó đến toàn bộ đồ thị. Có rất nhiều loại chỉ số trung tâm khác nhau và mỗi chỉ số có cách tính cũng như ý nghĩa khác nhau trong đánh giá độ quan trọng của một đỉnh và cạnh của đồ thị. Sau đây ta giới thiệu những chỉ số trung tâm cơ bản và ý nghĩa của chúng trong mạng giao thông.
+Một trong những bài toán trong phân tích đồ thị là quyết định độ quan trong của một đỉnh hay một cạnh. Chỉ số \textbf{tính trung tâm} \index{tính trung tâm} (centrality) của một đỉnh trong đồ thị thường chỉ ra mức độ ảnh hưởng của một đỉnh đó đến toàn bộ đồ thị. Có rất nhiều loại chỉ số trung tâm khác nhau và mỗi chỉ số có cách tính cũng như ý nghĩa khác nhau trong đánh giá độ quan trọng của một đỉnh hay cạnh của đồ thị. Sau đây ta giới thiệu những chỉ số trung tâm cơ bản và ý nghĩa của chúng trong mạng giao thông.
 
 \subsubsection{Khoảng cách, tâm sai, bán kính, đường kính của đồ thị}
-Ta sẽ nhắc lại một số khái niệm cơ bản về lý thuyết đồ thị được sử dụng trong phần này.
+Trước khi đề cập đến các chỉ số trung tâm (centrality), ta sẽ nhắc lại một số khái niệm cơ bản về lý thuyết đồ thị được sử dụng trong phần này.
 
 \cite{graphtextbook} Cho đồ thị $G=(V,E)$, \textbf{khoảng cách} \index{khoảng cách} giữa hai đỉnh $u$ và $v$ của đồ thị $G$ là độ dài của đường đi ngắn nhất giữa hai đỉnh. Khoảng cách này kí hiệu là $d(u,v)$.
 
@@ -625,7 +673,7 @@ trong đó $d^{\text{crowfly}}(i,j)$ là khoảng cách chim bay giữa hai đ�
 \subsection{Phân tích mạng đường bộ Việt Nam}
 \newpage
 \subsubsection{Phân tích các tham số cơ bản}
-Hình \ref{fig:degreedist} biểu diễn biểu phân phối bậc của các đỉnh trong đồ thị mạng đường bộ Việt Nam.Trong dữ liệu GIS đường bộ Việt Nam có rất nhiều đoạn đường ngắn, nối tiếp nhau, của cùng một tên đường, nên ta có thể thấy là số đỉnh bậc 2 chiếm đa số trong phân phối bậc của đỉnh. Còn lại số đỉnh bậc 1,3 và 4 của đồ thị khá hợp lý, tương tự với kết quả thu được trong phân tích mạng giao thông của Thụy Sĩ \cite{swissroad}, số đỉnh bậc 3 chiếm đa phần nếu không tính các đỉnh bậc 2 sinh ra do dữ liệu chưa chuẩn.
+Hình \ref{fig:degreedist} biểu diễn biểu phân phối bậc của các đỉnh trong đồ thị mạng đường bộ Việt Nam. Trong dữ liệu GIS đường bộ Việt Nam có rất nhiều đoạn đường ngắn, nối tiếp nhau, của cùng một tên đường, nên ta có thể thấy là số đỉnh bậc 2 chiếm đa số trong phân phối bậc của đỉnh. Còn lại số đỉnh bậc 1,3 và 4 của đồ thị khá hợp lý, tương tự với kết quả thu được trong phân tích mạng giao thông của Thụy Sĩ \cite{swissroad}, số đỉnh bậc 3 chiếm đa phần nếu không tính các đỉnh bậc 2 sinh ra do dữ liệu chưa chuẩn.
 
 Các 
 
@@ -635,7 +683,7 @@ Các
 	\caption[Phân phối bậc của đỉnh trong mạng đường bộ Việt Nam]{Phân phối bậc của đỉnh trong mạng đường bộ Việt Nam.}
 	\label{fig:degreedist}
 \end{figure}
-
+\subsubsection{Phân tích các chỉ số trung tâm}
 \section{Kết luận}
 
 %%%%%
@@ -663,8 +711,9 @@ Các
 	September 2009, Volume 9, Issue 3, pp 379–400
 	%
 	\bibitem{MIS}
-	Ngoc C. Lê.
-	"Algorithms for the Maximum Independent Set Problem",
+	Ngoc C. Lê. Christoph Brause and Ingo Schiermeyer,
+	"ON SEQUENTIAL HEURISTIC METHODS FOR THE MAXIMUM INDEPENDENT SET PROBLEM",
+	Discussiones Mathematicae, Graph Theory 37 (2017) pp. 415–426
 	%
 	\bibitem{MINAlgorithm}
 	Murphy, O. J.
